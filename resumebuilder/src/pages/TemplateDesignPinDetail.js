@@ -88,7 +88,8 @@ const TemplateDesignPinDetail = () => {
 
           {/* edit the template */}
 
-          <Link to={`/resume/${data?.name}?templateId=${data?.id}`} className='w-full px-4 py-3 rounded-md flex items-center justify-center bg-emerald-500 cursor-pointer'>
+
+          <Link to='/userdetail' className='w-full px-4 py-3 rounded-md flex items-center justify-center bg-emerald-500 cursor-pointer'>
             <p className='text-white font-semibold text-lg'>Edit this template</p>
           </Link>
 

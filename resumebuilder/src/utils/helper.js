@@ -1,3 +1,5 @@
+import { Template1, Template2 } from '../component/designs'
+
 export const adminEmail = ["riyajivani8@gmail.com", "reeaa819@gmail.com", "21ituof071@ddu.ac.in"]
 
 export const initialTags = [
@@ -17,3 +19,8 @@ export const FilteredData = [
      { id: "5", label: "Project Manager", value: "Project Manager" },
      { id: "6", label: "Legal Counsel", value: "Legal Counsel" }
 ];
+
+export const TemplatesData = [
+     { id: `template-${Date.now()}`, name: "Template1", component: Template1 },
+     { id: `template-${Date.now()}`, name: "Template2", component: Template2 }
+]

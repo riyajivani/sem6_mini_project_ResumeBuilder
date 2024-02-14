@@ -41,7 +41,7 @@ const Header = () => {
     <header className="w-full flex item-center justify-between px-4 py-3 lg:px-8 border-b border-gray-300 bg-bgPrimary z-50 gap-12 sticky">
 
       {/* logo */}
-      <Link>
+      <Link to='/'>
         <img src={Logo} className="w-12 h-auto object-contain" alt='' />
       </Link>
 
