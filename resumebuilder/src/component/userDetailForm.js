@@ -12,6 +12,8 @@ const UserDetailForm = () => {
           city: '',
           state: '',
           pincode: '',
+          role: '',
+          about: ''
      });
      const navigate = useNavigate();
 
@@ -36,6 +38,8 @@ const UserDetailForm = () => {
                city: '',
                state: '',
                pincode: '',
+               role: '',
+               about: ''
           });
           navigate('/experience');
      };
@@ -94,11 +98,31 @@ const UserDetailForm = () => {
                               className="w-full border p-2"
                          />
                     </div>
+                    <div className="mb-4">
+                         <label className="block mb-2">Role</label>
+                         <input
+                              type="text"
+                              name="role"
+                              value={userDetails.role}
+                              onChange={handleInputChange}
+                              className="w-full border p-2"
+                         />
+                    </div>
                     <div className="mb-8 col-span-2">
                          <label className="block mb-2">Address:</label>
                          <textarea
                               name="address"
                               value={userDetails.address}
+                              onChange={handleInputChange}
+                              className="w-full border p-2 resize-none"
+                              rows="4"
+                         />
+                    </div>
+                    <div className="mb-8 col-span-2">
+                         <label className="block mb-2">About:</label>
+                         <textarea
+                              name="about"
+                              value={userDetails.about}
                               onChange={handleInputChange}
                               className="w-full border p-2 resize-none"
                               rows="4"

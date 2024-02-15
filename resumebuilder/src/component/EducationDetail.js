@@ -2,61 +2,68 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const EducationDetail = () => {
-     const [educationDetails, setEducationDetails] = useState([
-          {
-               educationType: '',
-               degree: '',
-               university: '',
-               startYear: '',
-               endYear: '',
-          },
-     ]);
+     const [educationDetails, setEducationDetails] = useState({
+          education: [
+               {
+                    educationType: '',
+                    degree: '',
+                    university: '',
+                    startYear: '',
+                    endYear: '',
+               }
+          ],
+     });
 
      const navigate = useNavigate();
 
      const handleInputChange = (e, index) => {
           const { name, value } = e.target;
-          const updatedEducationDetails = [...educationDetails];
+          const updatedEducationDetails = [...educationDetails.education];
           updatedEducationDetails[index][name] = value;
-          setEducationDetails(updatedEducationDetails);
+          setEducationDetails({
+               education: updatedEducationDetails,
+          });
      };
 
      const handleAddEducation = () => {
-          setEducationDetails((prevEducationDetails) => [
-               ...prevEducationDetails,
-               {
-                    educationType: '',
-                    degree: '',
-                    university: '',
-                    startYear: '',
-                    endYear: '',
-               },
-          ]);
+          setEducationDetails({
+               education: [
+                    ...educationDetails.education,
+                    {
+                         educationType: '',
+                         degree: '',
+                         university: '',
+                         startYear: '',
+                         endYear: '',
+                    },
+               ],
+          });
      };
 
      const handleRemoveEducation = (index) => {
-          setEducationDetails((prevEducationDetails) => {
-               const updatedEducationDetails = [...prevEducationDetails];
-               updatedEducationDetails.splice(index, 1);
-               return updatedEducationDetails;
+          const updatedEducationDetails = [...educationDetails.education];
+          updatedEducationDetails.splice(index, 1);
+
+          setEducationDetails({
+               education: updatedEducationDetails,
           });
      };
 
      const handleFormSubmit = (e) => {
           e.preventDefault();
-          // Save education details array to local storage
-          //const storedEducationDetails = JSON.parse(localStorage.getItem('educationDetails')) || [];
-          localStorage.setItem('educationDetails', JSON.stringify(...educationDetails));
+          localStorage.setItem('educationDetails', JSON.stringify(educationDetails));
           // Clear the form after submission if needed
-          setEducationDetails([
-               {
-                    educationType: '',
-                    degree: '',
-                    university: '',
-                    startYear: '',
-                    endYear: '',
-               },
-          ]);
+          setEducationDetails({
+               education: [
+                    {
+                         educationType: '',
+                         degree: '',
+                         university: '',
+                         startYear: '',
+                         endYear: '',
+                    },
+               ],
+          });
 
           navigate('/skills')
      };
@@ -65,7 +72,7 @@ const EducationDetail = () => {
           <div className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-purple-700 rounded shadow-md">
                <h2 className="text-2xl mb-4 font-bold text-center text-purple-700">Education Details</h2>
                <form onSubmit={handleFormSubmit} className="mb-4">
-                    {educationDetails.map((education, index) => (
+                    {educationDetails.education.map((education, index) => (
                          <div key={index} className="grid grid-cols-2 gap-4">
                               <div className="mb-4">
                                    <label className="block mb-2">Education Type:</label>
