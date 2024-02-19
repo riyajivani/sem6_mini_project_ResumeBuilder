@@ -1,27 +1,22 @@
-import { React, useState, Fragment, useEffect } from 'react'
+import { React, useState, Fragment, useEffect, useRef } from 'react'
 import { PropagateLoader } from 'react-spinners'
 import { FcUpload } from "react-icons/fc";
 import { toast } from 'react-toastify'
-import { initialTags } from '../utils/helper'
+import axios from 'axios';
 
 const CreateTemplates = () => {
 
-  const [formData, setformData] = useState({
-    title: "",
-    imageURL: null,
-  })
-
   let [imageAsset, setImageAsset] = useState({
+    title: "",
     isImageLoading: false,
     url: ""
   })
-
-  const [selectedTags, setSelectedTags] = useState([]);
-
+  const [count, setCount] = useState(0);
+  const titleInputRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setformData((prevRec) => ({ ...prevRec, [name]: value }));
+    setImageAsset((prevRec) => ({ ...prevRec, [name]: value }));
   }
 
   // handle image file changes
@@ -34,6 +29,7 @@ const CreateTemplates = () => {
       toast(`${file.name} uploaded`);
       console.log(file)
       let url = URL.createObjectURL(file);
+      // console.log(url);
       setImageAsset(imageAsset = { ...imageAsset, isImageLoading: false, url: url });
 
     }
@@ -49,27 +45,23 @@ const CreateTemplates = () => {
     return allowdTypes.includes(file.type)
   }
 
-  const handleSelectedTags = (tag) => {
-    //check if the tag is selected or not
-    if (selectedTags.includes(tag)) {
-      // if selected then remove it
-      setSelectedTags(selectedTags.filter(selected => selected !== tag))
-    } else {
-      setSelectedTags([...selectedTags, tag])
-    }
-  }
-
   const PushToDb = async () => {
-    toast("successfully pusheds");
-    // const id = `${Date.now()}`
+    console.log(imageAsset);
+    try {
+      let res = await axios.post("http://localhost:8080/addtemplate", {
+        name: imageAsset.title,
+        url: imageAsset.url
+      })
 
-    // const _doc = {
-    //   id: id,
-    //   title: formData.title,
-    //   imageURL: imageAsset.url,
-    //   tags: selectedTags,
-    //   name: 'Template1'
-    // }
+      console.log(res);
+      toast("successfully pushed");
+      setCount(res.data + 1);
+      setImageAsset(imageAsset = { ...imageAsset, title: "", url: "" });
+      titleInputRef.current.focus();
+
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -85,11 +77,11 @@ const CreateTemplates = () => {
         {/* template id section */}
         <div className='w-full flex items-center justify-end'>
           <p className='text-base text-txtLight uppercase font-semibold'>TempID :{""}</p>
-          <p className='text-sm text-txtDark capitalize font-bold'>Template1</p>
+          <p className='text-lg text-txtDark capitalize font-bold ml-1'> {count}</p>
         </div>
 
         {/* template title */}
-        <input type='text' name='title' placeholder='Template Title' value={formData.title} onChange={handleInputChange}
+        <input type='text' name='title' placeholder='Template Title' value={imageAsset.title} onChange={handleInputChange} ref={titleInputRef}
           className='w-full px-4 py-3 rounded-md bg-transparent border border-gray-300 text-lg text-txtPrimary focus-within:text-txtDark focus:shadow-md outline-none' />
 
         {/* file uploader section */}
@@ -132,15 +124,6 @@ const CreateTemplates = () => {
 
             </Fragment>
           }
-        </div>
-
-        {/* tags */}
-        <div className='w-full flex items-center flex-wrap gap-2'>
-          {initialTags.map((tag, i) => (
-            <div className={`border border-gray-300 px-2 py-1 rounded-md cursor-pointer ${selectedTags.includes(tag) ? "bg-blue-500 text-white" : ""}`} key={i} onClick={() => handleSelectedTags(tag)}>
-              <p className='text-s'>{tag}</p>
-            </div>
-          ))}
         </div>
 
         <button type='button' className='w-full bg-blue-700 text-white rounded-md py-3' onClick={PushToDb}>

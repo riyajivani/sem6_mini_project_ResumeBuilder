@@ -36,7 +36,7 @@ const Template2 = () => {
 
                     <div className="flex flex-row justify-start h-full">
                          {/* Left side - Profile and Contact */}
-                         <div className="bg-slate-200 text-gray-800 p-8 ml-8 mb-3 w-1/3">
+                         <div className="bg-slate-200 text-gray-800 p-8 mb-3 w-fit">
                               <div className="mb-16">
                                    <h2 className="text-2xl font-bold mb-4 tracking-widest">PROFILE</h2>
                                    <p className='tracking-tight'>{user?.about}</p>

@@ -1,13 +1,13 @@
-package com.resumeBuilder.ResumeBuilder;
+package in.riyajivani.resumebuilder.resumebuilder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ResumeBuilderApplication {
+public class ResumebuilderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ResumeBuilderApplication.class, args);
+		SpringApplication.run(ResumebuilderApplication.class, args);
 	}
 
 }

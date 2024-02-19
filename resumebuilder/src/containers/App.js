@@ -21,6 +21,7 @@ function App() {
           <Route path='/skills' element={<Skills />} />
         </Routes>
       </Suspense>
+
       <ToastContainer position='top-right' theme='dark' autoClose={2000} icon={false} ty />
     </>
   );
