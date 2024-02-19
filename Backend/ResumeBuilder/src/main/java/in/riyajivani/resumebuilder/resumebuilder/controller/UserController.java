@@ -34,7 +34,7 @@ public class UserController {
         User storedUser = userService.getUserByEmail(email);
 
         if (storedUser != null && user.getPassword().equals(password)) {
-                return ResponseEntity.ok(storedUser.getEmail());
+            return ResponseEntity.ok(storedUser.getEmail());
         }
         else {
             return ResponseEntity.badRequest().body("Invalid email or password");

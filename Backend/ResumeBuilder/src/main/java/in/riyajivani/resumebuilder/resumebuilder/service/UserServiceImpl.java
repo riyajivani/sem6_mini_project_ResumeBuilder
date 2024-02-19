@@ -1,10 +1,10 @@
 package in.riyajivani.resumebuilder.resumebuilder.service;
 
+import in.riyajivani.resumebuilder.resumebuilder.dao.UserDAO;
 import in.riyajivani.resumebuilder.resumebuilder.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import in.riyajivani.resumebuilder.resumebuilder.dao.UserDAO;
 
 @Service // @Service annotation is used with classes that provide some business functionalities.
 public class UserServiceImpl implements UserService{

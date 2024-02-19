@@ -2,7 +2,6 @@ package in.riyajivani.resumebuilder.resumebuilder.service;
 
 import in.riyajivani.resumebuilder.resumebuilder.dao.TemplateDAO;
 import in.riyajivani.resumebuilder.resumebuilder.model.Template;
-import in.riyajivani.resumebuilder.resumebuilder.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
