@@ -35,4 +35,10 @@ public class TemplateController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
         }
     }
+
+    @DeleteMapping("/deletetemplate/{id}")
+    public ResponseEntity<String> deleteTemplate(@PathVariable int id){
+        templateService.deleteById(id);
+        return ResponseEntity.ok("successfully deleted");
+    }
 }

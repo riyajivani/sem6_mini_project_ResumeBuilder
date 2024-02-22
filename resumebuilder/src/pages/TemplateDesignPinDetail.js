@@ -28,47 +28,7 @@ const TemplateDesignPinDetail = () => {
 
           {/* load the template image */}
 
-          <img className='w-full h-auto object-contain rounded-md' src={data?.img} alt='' />
-
-          {/* title and other option */}
-
-          <div className='w-full flex flex-col items-start justify-start gap-2'>
-
-            {/* title section */}
-            <div className='w-full flex items-center justify-between'>
-
-              {/* title */}
-              <p className='text-base text-txtPrimary font-semibold'>{data?.title}</p>
-
-              {/* likes */}
-
-              {
-                data?.likes !== 0 && <div className='flex items-center justify-center gap-1'>
-                  <BiSolidHeart className='text-base text-red-500' />
-                  <p className='text-base text-txtPrimary font-semibold'>{data?.likes} Likes</p>
-                </div>
-              }
-            </div>
-
-            {/* collections favorite options */}
-
-            <div className='flex items-center justify-center gap-3'>
-              <Fragment>
-                <div className='flex items-center justify-center px-4 py-2 rounded-md border border-gray-300 gap-2 hover:bg-gray-200 cursor-pointer'>
-                  <BiSolidFolderPlus className='text-base text-txtPrimary' />
-                  <p className='text-sm text-txtPrimary whitespace-nowrap'>Remove from collection</p>
-                </div>
-              </Fragment>
-
-              <Fragment>
-                <div className='flex items-center justify-center px-4 py-2 rounded-md border border-gray-300 gap-2 hover:bg-gray-200 cursor-pointer'>
-                  <BiSolidHeart className='text-base text-txtPrimary' />
-                  <p className='text-sm text-txtPrimary whitespace-nowrap'>Remove from favorites</p>
-                </div>
-              </Fragment>
-            </div>
-
-          </div>
+          <img className='w-full h-auto object-contain rounded-md' src={data?.url} alt='' />
 
         </div>
 
@@ -88,16 +48,9 @@ const TemplateDesignPinDetail = () => {
 
           {/* edit the template */}
 
-
-          <Link to='/userdetail' className='w-full px-4 py-3 rounded-md flex items-center justify-center bg-emerald-500 cursor-pointer'>
+          <Link to='/userdetail' className='w-full px-4 py-3 rounded-md flex items-center justify-center bg-purple-800 cursor-pointer'>
             <p className='text-white font-semibold text-lg'>Edit this template</p>
           </Link>
-
-          <div className='w-full flex items-center justify-start flex-wrap gap-2'>
-            {initialTags.map((tag, index) => (
-              <p key={index} className='text-ss border border-gray-300 px-2 py-1 rounded-md whitespace-nowrap'>{tag}</p>
-            ))}
-          </div>
 
         </div>
       </div>

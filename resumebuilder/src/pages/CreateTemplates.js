@@ -1,8 +1,10 @@
 import { React, useState, Fragment, useEffect, useRef } from 'react'
 import { PropagateLoader } from 'react-spinners'
-import { FcUpload } from "react-icons/fc";
+// import { FcUpload } from "react-icons/fc";
 import { toast } from 'react-toastify'
 import axios from 'axios';
+import { FaTrash } from 'react-icons/fa'
+// import MainSpinner from '../component/MainSpinner'
 
 const CreateTemplates = () => {
 
@@ -11,42 +13,17 @@ const CreateTemplates = () => {
     isImageLoading: false,
     url: ""
   })
-  const [count, setCount] = useState(0);
   const titleInputRef = useRef(null);
+  const [template, setTemplate] = useState([]);
+  const [preview, setPreview] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setImageAsset((prevRec) => ({ ...prevRec, [name]: value }));
   }
 
-  // handle image file changes
-  const handleFileSelect = async (e) => {
-    setImageAsset(imageAsset = { ...imageAsset, isImageLoading: true });
-
-    const file = e.target.files[0];
-
-    if (file && isAllowed(file)) {
-      toast(`${file.name} uploaded`);
-      console.log(file)
-      let url = URL.createObjectURL(file);
-      // console.log(url);
-      setImageAsset(imageAsset = { ...imageAsset, isImageLoading: false, url: url });
-
-    }
-    else {
-      toast.info('Invalid file format');
-    }
-
-  }
-
-  // give permission to specified file type
-  const isAllowed = (file) => {
-    const allowdTypes = ["image/jpeg", "image/jpg", "image/png"]
-    return allowdTypes.includes(file.type)
-  }
-
   const PushToDb = async () => {
-    console.log(imageAsset);
+
     try {
       let res = await axios.post("http://localhost:8080/addtemplate", {
         name: imageAsset.title,
@@ -55,10 +32,26 @@ const CreateTemplates = () => {
 
       console.log(res);
       toast("successfully pushed");
-      setCount(res.data + 1);
       setImageAsset(imageAsset = { ...imageAsset, title: "", url: "" });
       titleInputRef.current.focus();
 
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const fetchTemplate = async () => {
+    let response = await axios.get("http://localhost:8080/gettemplate");
+    setTemplate(response.data)
+  }
+
+  useEffect(() => { fetchTemplate() }, [])
+
+  const handleDelete = async (id) => {
+    try {
+      let response = await axios.delete(`http://localhost:8080/deletetemplate/${id}`);
+      console.log(response.data);
+      toast("successfully deleted");
     } catch (e) {
       console.log(e);
     }
@@ -76,15 +69,18 @@ const CreateTemplates = () => {
 
         {/* template id section */}
         <div className='w-full flex items-center justify-end'>
-          <p className='text-base text-txtLight uppercase font-semibold'>TempID :{""}</p>
-          <p className='text-lg text-txtDark capitalize font-bold ml-1'> {count}</p>
+          <p className='text-base text-txtLight uppercase font-semibold'>TempID :</p>
+          <p className='text-lg text-txtDark capitalize font-bold ml-1'>{template.length > 0 ? `${template.length + 1}` : "1"}</p>
         </div>
 
-        {/* template title */}
+        {/* template title and image url from github*/}
         <input type='text' name='title' placeholder='Template Title' value={imageAsset.title} onChange={handleInputChange} ref={titleInputRef}
           className='w-full px-4 py-3 rounded-md bg-transparent border border-gray-300 text-lg text-txtPrimary focus-within:text-txtDark focus:shadow-md outline-none' />
 
-        {/* file uploader section */}
+        <input type='text' name='url' placeholder='copy image link from github' value={imageAsset.url} onChange={handleInputChange} ref={titleInputRef}
+          className='w-full px-4 py-3 rounded-md bg-transparent border border-gray-300 text-lg text-txtPrimary focus-within:text-txtDark focus:shadow-md outline-none' />
+
+        {/* preview */}
         <div className='w-full bg-gray-100 backdrop-blur-md rounded-md border-2 border-dotted border-gray-300 cursor-pointer flex item-center justify-center'>
 
           {imageAsset.isImageLoading
@@ -97,23 +93,8 @@ const CreateTemplates = () => {
 
             : <Fragment>
 
-              {!imageAsset?.url
-
-                ?
-                <Fragment>
-                  <label className='w-full cursor-pointer h-full'>
-                    <div className='flex flex-col items-center justify-center h-full w-full'>
-                      <div className='flex items-center justify-center cursor-pointer flex-col gap-4'>
-                        <FcUpload className='text-2xl bg-purple-200' />
-                        <p className='text-lg text-txtLight'>Click to Upload</p>
-                      </div>
-                    </div>
-
-                    {/* onclick upload file we have to open window for upload file */}
-                    <input type='file' className='w-0 h-0' accept='.jpeg, .jpg, .png' onChange={handleFileSelect} />
-
-                  </label>
-                </Fragment>
+              {!preview
+                ? <></>
                 :
                 <Fragment>
                   <div className='relative w-full h-full overflow-hidden rounded-md'>
@@ -126,15 +107,44 @@ const CreateTemplates = () => {
           }
         </div>
 
-        <button type='button' className='w-full bg-blue-700 text-white rounded-md py-3' onClick={PushToDb}>
+        <button type='button' className='w-fit bg-purple-400 text-white rounded-md py-3 px-3' disabled={imageAsset?.url <= 0} onClick={() => { setPreview(!preview); }}>
+          {preview === true ? "Hide" : "Show"} Previw</button>
+
+        <button type='button' className='w-full bg-purple-700 text-white rounded-md py-3' disabled={imageAsset?.title <= 0 || imageAsset?.url <= 0} onClick={PushToDb}>
           Save</button>
       </div>
 
 
       {/* right container */}
-      <div className='col-span-12 lg:col-span-8 2xl:col-span-9 px-2 w-full flex-1 py-4'>2</div>
+      <div className='col-span-12 lg:col-span-8 2xl:col-span-9 px-2 w-full flex-1 py-4'>
+        <Fragment>
+          {template.length > 0
+            ?
+            <Fragment>
+              <div className='w-full h-full grid grid-cols-1 lg:grid-cols-2 2xl:griap-4d-cols-4 gap-4'>
+                {template.map((temp) => (
+                  <div key={temp?.templateId} className='w-full h-[500px] rounded-md overflow-hidden relative'>
+                    <img alt='' src={temp?.url} className='w-full h-full object-fill' />
+                    <div className='absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center bg-red-500 cursor-pointer' onClick={() => handleDelete(temp?.templateId)}>
+                      <FaTrash className='text-sm text-white' />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Fragment>
 
-    </div>
+            :
+            <Fragment>
+              <div className='w-full h-full flex flex-col gap-6 items-center justify-center'>
+                <PropagateLoader color='#9b36d6' speedMultiplier={2} />
+                <p className='text-xl tracking-wider capitalize text-txtPrimary'>No data</p>
+              </div>
+            </Fragment>
+          }
+        </Fragment>
+      </div>
+
+    </div >
   )
 }
 

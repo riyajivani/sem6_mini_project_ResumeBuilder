@@ -33,4 +33,9 @@ public class TemplateServiceImpl implements TemplateService{
     public int getIdByName(String name){
         return templateDAO.getIdByName(name);
     }
+
+    @Override @Transactional
+    public void deleteById(int id) {
+        templateDAO.deleteById(id);
+    }
 }

@@ -14,4 +14,6 @@ public interface TemplateDAO {
     Template getTmpByName(String name);
 
     int getIdByName(String name);
+
+    void deleteById(int id);
 }

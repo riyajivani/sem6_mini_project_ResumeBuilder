@@ -12,4 +12,6 @@ public interface TemplateService {
     Template getTmpByName(String name);
 
     int getIdByName(String name);
+
+    void deleteById(int id);
 }

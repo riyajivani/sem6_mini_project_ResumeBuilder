@@ -44,4 +44,11 @@ public class TemplateDAOImpl implements TemplateDAO{
         Template template = query.uniqueResult();
         return (template != null) ? template.getTemplateId() : -1;
     }
+
+    @Override
+    public void deleteById(int id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Template tmp = currentSession.get(Template.class,id);
+        currentSession.remove(tmp);
+    }
 }

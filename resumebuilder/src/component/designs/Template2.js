@@ -11,8 +11,8 @@ const Template2 = () => {
      let work = JSON.parse(localStorage.getItem("workExperience"))
      let skills = JSON.parse(localStorage.getItem("selectedSkills"));
 
-     const handleDownLoad = () => {
-          const content = document.getElementById('resume-template-1');
+     const handleDownLoad2 = () => {
+          const content = document.getElementById('resume-template-2');
 
           html2canvas(content).then((canvas) => {
                const imgData = canvas.toDataURL('img/png', '0.98');
@@ -20,15 +20,15 @@ const Template2 = () => {
                const componentWidth = doc.internal.pageSize.getWidth();
                const componentHeight = doc.internal.pageSize.getHeight();
                doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-               doc.save('template1.pdf');
+               doc.save('template2.pdf');
           })
      }
 
      return (
           <>
-               <button onClick={handleDownLoad} className='bg-purple-500 text-white p-2 rounded-md hover:bg-purple-700'>download</button>
+               <button onClick={handleDownLoad2} className='bg-purple-500 text-white p-2 rounded-md hover:bg-purple-700'>download</button>
 
-               <div id='resume-template-1' className="flex flex-col bg-white mt-5 mb-5 ml-52 mr-52">
+               <div id='resume-template-2' className="flex flex-col bg-white mt-5 mb-5 ml-52 mr-52">
                     <div className="flex flex-col items-center justify-center gap-5 bg-slate-300 p-4 h-40">
                          <h1 className="text-5xl font-bold text-center text-black">{user?.firstName} {user?.lastName}</h1>
                          <h5 className="text-lg text-center text-black">{user?.role}</h5>

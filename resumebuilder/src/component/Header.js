@@ -61,14 +61,14 @@ const Header = () => {
 
         <React.Fragment>
           <motion.div {...FadeInOutWithOpacity} className="relative" onClick={() => setIsMenu(!isMenu)}>
-            <div className="w-12 h-12 rounded-md relative flex items-center justify-center bg-blue-700 shadow-md cursor-pointer">
+            <div className="w-12 h-12 rounded-md relative flex items-center justify-center bg-purple-700 shadow-md cursor-pointer">
               <p className="text-4xl text-white">{email[0].toUpperCase()}</p>
             </div>
 
             {/* drop-down menu */}
             <AnimatePresence>
               {isMenu && <motion.div {...slideUpDownMenu} onMouseLeave={() => setIsMenu(false)} className="absolute px-4 py-3 rounded-md bg-white right-0 top-14 flex flex-col items-center justify-start gap-3 w-64 pt-12">
-                <div className="w-20 h-20 rounded-full relative flex items-center justify-center bg-blue-700 shadow-md cursor-pointer">
+                <div className="w-20 h-20 rounded-full relative flex items-center justify-center bg-purple-700 shadow-md cursor-pointer">
                   <p className="text-4xl text-white">{email[0].toUpperCase()}</p>
                 </div>
 
@@ -77,7 +77,7 @@ const Header = () => {
 
                 {/* menus */}
                 <div className="w-full flex-col items-start flex gap-8 pt-6">
-                  <Link className="text-txtLight hover:text-txtDark text-base whitespace-nowrap" to={"/profile"}> My Account </Link>
+                  {/*<Link className="text-txtLight hover:text-txtDark text-base whitespace-nowrap" to={"/profile"}> My Account </Link> */}
 
                   {adminEmail.includes(email) &&
                     <Link className="text-txtLight hover:text-txtDark text-base whitespace-nowrap" to={"/template/create"}> Add new Template </Link>

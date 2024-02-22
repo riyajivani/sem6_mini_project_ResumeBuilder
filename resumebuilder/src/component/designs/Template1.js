@@ -1,81 +1,128 @@
-import React, { useState } from 'react';
+import React from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 const Template1 = () => {
-     const [name, setName] = useState('');
-     const [email, setEmail] = useState('');
-     const [phone, setPhone] = useState('');
-     const [education, setEducation] = useState('');
-     const [experience, setExperience] = useState('');
+     let user = JSON.parse(localStorage.getItem("userDetails"))
+     let education = JSON.parse(localStorage.getItem("educationDetails"))
+     let work = JSON.parse(localStorage.getItem("workExperience"))
+     let skills = JSON.parse(localStorage.getItem("selectedSkills"));
 
-     const handleSaveAsPDF = () => {
-          const content = document.getElementById('resume-template');
+     const handleDownLoad1 = () => {
+          const content = document.getElementById('resume-template-1');
 
           html2canvas(content).then((canvas) => {
-               const imgData = canvas.toDataURL('img/png');
-               const doc = new jsPDF('l', 'em', 'a4');
+               const imgData = canvas.toDataURL('img/png', '0.98');
+               const doc = new jsPDF('p', 'in');
                const componentWidth = doc.internal.pageSize.getWidth();
                const componentHeight = doc.internal.pageSize.getHeight();
                doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
                doc.save('template1.pdf');
           })
-     };
+     }
 
      return (
-          <div id="resume-template" className="container mx-auto my-8 p-8 bg-gray-200 rounded-lg shadow-lg">
-               <h1 className="text-3xl mb-4">Edit Your Resume</h1>
-               <div className="mb-4">
-                    <label className="block mb-2">Name:</label>
-                    <input
-                         type="text"
-                         className="w-full p-2 border border-gray-300 rounded"
-                         value={name}
-                         onChange={(e) => setName(e.target.value)}
-                    />
+          <>
+               <button onClick={handleDownLoad1} className='bg-purple-500 text-white p-2 rounded-md hover:bg-purple-700'>download</button>
+
+               <div id='resume-template-1' className="flex flex-col bg-white mt-5 mb-5 ml-52 mr-52 font-sans h-full"> {/* style={{ width: '600px' }}*/}
+                    <div className="flex flex-col items-start justify-start gap-2 p-4">
+                         <h1 className="text-5xl font-normal text-start text-black mb-3" style={{ letterSpacing: '1rem' }}>{user?.firstName} <br /> {user?.lastName}</h1>
+                         <p className='border-b-2 border-b-black w-full'></p>
+                         <h5 className="text-lg text-center text-black">{user?.role}</h5>
+                         <p className='border-b-2 border-b-black w-full'></p>
+                    </div>
+
+                    <div className="flex flex-row justify-start h-full">
+                         {/* Left side - Profile and Contact */}
+                         <div className="text-black p-8 mb-3 w-1/2 flex flex-col gap-5">
+                              <div>
+                                   <h2 className="text-2xl font-bold mb-2 tracking-widest">ABOUT ME</h2>
+                                   <p className='border-b-2 border-b-black w-full mb-4'></p>
+                                   <p className='tracking-tight text-justify'>{user?.about}</p>
+                              </div>
+
+                              <div>
+                                   <h2 className="text-2xl font-bold mb-2 tracking-widest">CONTACT</h2>
+                                   <p className='border-b-2 border-b-black w-full mb-4'></p>
+                                   <div className="flex items-center m-2">
+                                        {/* <FaEnvelope className="mr-2" /> */}
+                                        <p className="mr-2 font-bold">Email:</p>
+                                        <p>{user?.email}</p>
+                                   </div>
+
+                                   <div className="flex items-center m-2">
+                                        {/* <FaPhoneAlt className="mr-2" /> */}
+                                        <p className="mr-2 font-bold">Phone:</p>
+                                        <p>{user?.phone}</p>
+                                   </div>
+
+                                   <div className="flex items-start m-2">
+                                        {/* <FaLocationDot className="mr-2 text-2xl" /> */}
+                                        <p className="mr-2 font-bold">Address:</p>
+                                        <p>{user?.address}</p>
+                                   </div>
+
+                              </div>
+
+                              <div>
+                                   <h2 className="text-2xl font-bold mb-2 tracking-widest">SKILLS</h2>
+                                   <p className='border-b-2 border-b-black w-full mb-4'></p>
+                                   {skills.map((skill, index) => (
+                                        <p key={index} className='mb-1'>{skill}</p>
+                                   ))}
+                              </div>
+
+                         </div>
+
+                         {/* Right side - Education, Skills, and Experience */}
+                         <div className="text-black p-8 w-full">
+                              <div className="mb-12">
+                                   <h2 className="text-2xl font-bold mb-2 tracking-widest">EDUCATION</h2>
+                                   <p className='border-b-2 border-b-black w-full mb-4'></p>
+                                   {education.education.map((ed, index) => (
+                                        <div className='mb-3' key={index}>
+
+                                             <h3 className='text-lg font-bold'>{ed?.degree}</h3>
+                                             <p>{ed?.university}</p>
+                                             <p className='font-medium'>{ed?.startYear}-{ed?.endYear}</p>
+                                        </div>
+                                   ))}
+                              </div>
+
+                              <div className="mb-3">
+                                   <h2 className="text-2xl font-bold mb-2 tracking-widest">EXPERIENCES</h2>
+                                   <p className='border-b-2 border-b-black w-full mb-4'></p>
+                                   {work.experiences.map((work, index) => (
+                                        <div className='mb-4 flex flex-row justify-start' key={index}>
+                                             {/* <div className='flex items-center'>
+                                                  <GoDot className='mr-2' />
+                                                  <h3 className='text-lg font-bold tracking-wide'>{work?.startYear} - {work?.endYear}</h3>
+                                             </div>
+                                             <div className='pl-6'>
+                                                  <p>{work?.organization}</p>
+                                                  <p className='text-md font-bold mt-1'>{work?.jobTitle}</p>
+                                                  <p>{work?.jobDescription}</p>
+                                             </div> */}
+
+                                             <div className='w-1/2 flex flex-col gap-1 mt-1'>
+                                                  <p className='text-lg font-bold mt-1'>{work?.jobTitle}</p>
+                                                  <h3 className='text-md tracking-wide'>{work?.startYear} - {work?.endYear}</h3>
+                                             </div>
+
+                                             <div className='w-full flex flex-col gap-1 mt-1'>
+                                                  <p className='text-lg font-bold mt-1'>{work?.organization}</p>
+                                                  <p className='text-justify'>{work?.jobDescription}</p>
+                                             </div>
+                                        </div>
+                                   ))}
+                              </div>
+                         </div>
+                    </div>
                </div>
-               <div className="mb-4">
-                    <label className="block mb-2">Email:</label>
-                    <input
-                         type="text"
-                         className="w-full p-2 border border-gray-300 rounded"
-                         value={email}
-                         onChange={(e) => setEmail(e.target.value)}
-                    />
-               </div>
-               <div className="mb-4">
-                    <label className="block mb-2">Phone:</label>
-                    <input
-                         type="text"
-                         className="w-full p-2 border border-gray-300 rounded"
-                         value={phone}
-                         onChange={(e) => setPhone(e.target.value)}
-                    />
-               </div>
-               <div className="mb-4">
-                    <label className="block mb-2">Education:</label>
-                    <textarea
-                         className="w-full p-2 border border-gray-300 rounded"
-                         value={education}
-                         onChange={(e) => setEducation(e.target.value)}
-                    />
-               </div>
-               <div className="mb-4">
-                    <label className="block mb-2">Experience:</label>
-                    <textarea
-                         className="w-full p-2 border border-gray-300 rounded"
-                         value={experience}
-                         onChange={(e) => setExperience(e.target.value)}
-                    />
-               </div>
-               <button
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
-                    onClick={handleSaveAsPDF}
-               >
-                    Save as PDF
-               </button>
-          </div>
+          </>
      );
 };
+
 
 export default Template1;
