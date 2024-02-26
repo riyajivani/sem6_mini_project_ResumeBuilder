@@ -50,7 +50,8 @@ const Authentication = () => {
   }
 
   return (
-    <div className="auth-section">
+    // <div className="auth-section">
+    <div className="w-full h-fit overflow-hidden flex flex-col items-start justify-start px-6 py-4 gap-6">
       {/* top section */}
       <img src={Logo} className="w-12 h-auto object-contain" alt="" />
 

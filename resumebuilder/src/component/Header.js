@@ -7,45 +7,51 @@ import { motion } from 'framer-motion'
 import { AiOutlineLogout } from "react-icons/ai"
 import { slideUpDownMenu, FadeInOutWithOpacity } from '../animations'
 import { toast } from "react-toastify"
-import { adminEmail, FilteredData as defaultFilteredData } from '../utils/helper'
+// import { adminEmail, FilteredData as defaultFilteredData } from '../utils/helper'
+import { adminEmail } from "../utils/helper"
+import { useNavigate } from "react-router-dom"
+
 
 const Header = () => {
   const email = localStorage.getItem("loggedInUser");
   const [isMenu, setIsMenu] = useState(false);
-  const [search, setSearch] = useState("");
-  const [filteredData, setFilteredData] = useState(defaultFilteredData);
+  // const [search, setSearch] = useState("");
+  // const [filteredData, setFilteredData] = useState(defaultFilteredData);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
+    localStorage.clear("loggedInUser");
+    navigate('/auth');
     toast("sign out successfully");
   }
 
-  const handleSearchItem = (e) => {
+  // const handleSearchItem = (e) => {
 
-    const searched = e.target.value.toLowerCase();
+  //   const searched = e.target.value.toLowerCase();
 
-    setSearch(searched);
+  //   setSearch(searched);
 
-    const filtered = defaultFilteredData.filter(item =>
-      item.label.toLowerCase().includes(searched) ||
-      item.value.toLowerCase().includes(searched)
-    );
+  //   const filtered = defaultFilteredData.filter(item =>
+  //     item.label.toLowerCase().includes(searched) ||
+  //     item.value.toLowerCase().includes(searched)
+  //   );
 
-    setFilteredData(filtered);
-    console.log(filteredData);
-  }
+  //   setFilteredData(filtered);
+  //   console.log(filteredData);
+  // }
 
-  const clearFilter = () => { setSearch(''); }
+  // const clearFilter = () => { setSearch(''); }
 
   return (
-    <header className="w-full flex item-center justify-between px-4 py-3 lg:px-8 border-b border-gray-300 bg-bgPrimary z-50 gap-12 sticky">
+    <header className="w-full flex items-center justify-between px-2 py-1 lg:px-8 border-b border-purple-300 bg-purple-200 z-50 sticky">
 
       {/* logo */}
       <Link to='/'>
-        <img src={Logo} className="w-12 h-auto object-contain" alt='' />
+        <img src={Logo} className="w-16 h-auto object-contain" alt='' />
       </Link>
 
       {/* input */}
-      <div className="flex-1 border-gray-300 px-4 py-1 rounded-md flex items-center justify-between bg-gray-200">
+      {/* <div className="flex-1 border-gray-300 px-4 py-1 rounded-md flex items-center justify-between bg-gray-200">
         <input type='text' value={search} placeholder="search here..." onChange={handleSearchItem} className="flex-1 h-10 bg-transparent text-base font-semibold outline-none border-none" />
         <AnimatePresence>
           {search.length > 0 &&
@@ -54,7 +60,7 @@ const Header = () => {
             </motion.div>
             )}
         </AnimatePresence>
-      </div>
+      </div> */}
 
       {/* profile section */}
       <AnimatePresence>

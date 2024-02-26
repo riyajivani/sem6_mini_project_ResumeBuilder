@@ -6,10 +6,6 @@ import axios from 'axios'
 
 const HomeContainer = () => {
 
-  // const templates = [
-  //   { id: 1, name: 'template1', img: Template1, index: 1, title: 'Professinal Resume for Front-end Developer', likes: 30 },
-  //   { id: 2, name: 'template2', img: Template2, index: 2, title: 'Professinal Resume for Software Developer', likes: 15 },
-  // ]
   const [templates, setTemplates] = useState([]);
 
   const fetchTemp = async () => {

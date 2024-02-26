@@ -46,7 +46,7 @@ const Template3 = () => {
                     <div className="bg-teal-600 text-gray-200 p-8 w-96 absolute top-3 left-10 h-fit">
 
                          <div className='mb-16 flex justify-center'>
-                              <img className='border-4 border-gray-200 w-52 h-52 rounded-full flex justify-center items-center' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhTOacmDSSuZrHW9dHOJRtr7HP6cjcHquSMJKu9S5Sz5sEd509AjRAoFqCqmvNyVZEwW3KgcSeSDR8as4W-T0mbJt-ZlFw7DE3CASJF2AMfe0Zx9eHVEfO5T8hUdY5Y5JVkFceVM_GiEUoynH0lNAcV4mpUZsm-dsJzc-BFDhZ2WP5cWIoO2Jhiie24VPXg/s1380/Template1.jpg' alt='' />
+                              <img className='border-4 border-gray-200 w-52 h-52 rounded-full flex justify-center items-center' src='https://github.com/riyajivani/imagesToUpload/blob/main/profile-pic.png?raw=true' alt='' />
                          </div>
 
                          <div className="mb-16">
