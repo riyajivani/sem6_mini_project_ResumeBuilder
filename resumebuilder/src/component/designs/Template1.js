@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -7,25 +7,33 @@ const Template1 = () => {
      let education = JSON.parse(localStorage.getItem("educationDetails"))
      let work = JSON.parse(localStorage.getItem("workExperience"))
      let skills = JSON.parse(localStorage.getItem("selectedSkills"));
+     const pdfRef1 = useRef();
 
      const handleDownLoad1 = () => {
-          const content = document.getElementById('resume-template-1');
 
-          html2canvas(content).then((canvas) => {
-               const imgData = canvas.toDataURL('img/png', '0.98');
-               const doc = new jsPDF('p', 'in');
-               const componentWidth = doc.internal.pageSize.getWidth();
-               const componentHeight = doc.internal.pageSize.getHeight();
-               doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-               doc.save('template1.pdf');
-          })
+          const input = pdfRef1.current;
+          html2canvas(input).then((canvas) => {
+               const imgData = canvas.toDataURL('img/png');
+               const pdf = new jsPDF('p', 'mm', 'a4', true);
+               const pdfWidth = pdf.internal.pageSize.getWidth();
+               const pdfHeight = pdf.internal.pageSize.getHeight();
+               const imgWidth = canvas.width;
+               const imgHeight = canvas.height;
+               const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+               const imgX = (pdfWidth - imgWidth * ratio) / 2;
+               // const imgY = 30;
+               const imgY = (pdfHeight - imgHeight * ratio) / 2;
+               pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+               pdf.save('template1.pdf');
+
+          });
      }
 
      return (
           <>
                <button onClick={handleDownLoad1} className='bg-purple-500 text-white p-2 rounded-md hover:bg-purple-700'>download</button>
 
-               <div id='resume-template-1' className="flex flex-col bg-white mt-5 mb-5 ml-52 mr-52 font-sans h-full"> {/* style={{ width: '600px' }}*/}
+               <div id='resume-template-1' ref={pdfRef1} className="flex flex-col bg-white mt-5 mb-5 ml-52 mr-52 h-full"> {/* style={{ width: '600px' }}*/}
                     <div className="flex flex-col items-start justify-start gap-2 p-4">
                          <h1 className="text-5xl font-normal text-start text-black mb-3" style={{ letterSpacing: '1rem' }}>{user?.firstName} <br /> {user?.lastName}</h1>
                          <p className='border-b-2 border-b-black w-full'></p>
