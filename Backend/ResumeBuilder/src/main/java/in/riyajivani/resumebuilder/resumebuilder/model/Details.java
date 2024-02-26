@@ -10,7 +10,8 @@ public class Details {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long detailId;
 
-    @OneToOne(mappedBy = "details" , cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_fk")
     private User user;
     private String firstName;
     private String lastName;

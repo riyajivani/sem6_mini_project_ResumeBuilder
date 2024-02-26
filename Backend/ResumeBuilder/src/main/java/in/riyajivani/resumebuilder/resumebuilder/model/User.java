@@ -13,9 +13,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "details_fk")
-    private Details details;
+//    @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL)
+//    private Details details;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Education> educations;
@@ -53,13 +52,13 @@ public class User {
         this.password = password;
     }
 
-    public Details getDetails() {
-        return details;
-    }
-
-    public void setDetails(Details details) {
-        this.details = details;
-    }
+//    public Details getDetails() {
+//        return details;
+//    }
+//
+//    public void setDetails(Details details) {
+//        this.details = details;
+//    }
 
     public List<Education> getEducation() {
         return educations;
@@ -89,7 +88,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", details=" + details +
+//                ", details=" + details +
                 ", educations=" + educations +
                 ", experiences=" + experiences +
                 ", skills=" + skills +

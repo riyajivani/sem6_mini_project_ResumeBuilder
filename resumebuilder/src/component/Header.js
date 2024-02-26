@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom"
 
 
 const Header = () => {
-  const email = localStorage.getItem("loggedInUser");
+  const email = JSON.parse(localStorage.getItem("loggedInUser"))?.email;
   const [isMenu, setIsMenu] = useState(false);
   // const [search, setSearch] = useState("");
   // const [filteredData, setFilteredData] = useState(defaultFilteredData);

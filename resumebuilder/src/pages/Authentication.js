@@ -22,7 +22,7 @@ const Authentication = () => {
       })
 
       console.log(res);
-      localStorage.setItem("loggedInUser", res.data);
+      localStorage.setItem("loggedInUser", JSON.stringify(res.data));
       navigate("/")
     }
     catch (e) {

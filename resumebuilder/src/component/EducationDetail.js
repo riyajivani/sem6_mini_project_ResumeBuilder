@@ -145,10 +145,11 @@ const EducationDetail = () => {
                     <div className="col-span-2 mt-4">
                          <button
                               type="submit"
-                              className="bg-purple-700 text-white p-2 hover:bg-purple-800 w-full"
-                         >
+                              className="bg-purple-700 text-white p-2 hover:bg-purple-800 w-full">
                               Submit
                          </button>
+
+                         <p className='text-red-600 mt-2'>you can not change the details so check it once carefully before submit.</p>
                     </div>
                </form>
           </div>

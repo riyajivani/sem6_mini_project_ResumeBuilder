@@ -6,21 +6,56 @@ const Skills = () => {
      const data = JSON.parse(localStorage.getItem("ChosenTemplate"));
 
      const skillsList = [
-          'Communication Skills',
-          'Critical Thinking',
-          'Creativity',
+          'Active Listening',
           'Adaptability',
-          'Collaboration',
-          'Time Management',
-          'Leadership',
-          'Technical Proficiency',
-          'Analytical Skills',
-          'Mathematics',
+          'Artificial Intelligence',
+          'Automation',
+          'Budgeting and Financial Management',
+          'Business Analysis',
+          'Client Relationship Management',
+          'Cloud Computing',
           'Coding/Programming',
-          'Research Skills',
-          'Foreign Language Proficiency',
+          'Collaboration',
+          'Communication Skills',
+          'Conflict Resolution',
+          'Creativity',
+          'Critical Thinking',
+          'Cross-Cultural Competence',
+          'Cybersecurity',
+          'Data Analysis',
+          'Database Management',
+          'Decision Making',
+          'Emotional Intelligence',
+          'Empathy',
+          'Financial Management',
+          'Flexibility',
+          'Geographic Information System (GIS)',
+          'Git (Version Control)',
+          'Hardware Troubleshooting',
+          'IT Infrastructure Management',
+          'Leadership',
+          'Machine Learning',
+          'Market Research',
+          'Mobile App Development',
+          'Networking',
+          'Negotiation Skills',
+          'Presentation Skills',
+          'Problem-Solving',
           'Project Management',
-     ];
+          'Regulatory Compliance',
+          'Risk Management',
+          'Software Testing',
+          'Stress Management',
+          'Strategic Planning',
+          'System Integration',
+          'Technical Writing',
+          'Teamwork',
+          'Time Management',
+          'UI/UX Design',
+          'Vendor Management',
+          'Virtualization',
+          'Web Development'
+     ]
 
      const navigate = useNavigate();
 
@@ -67,6 +102,7 @@ const Skills = () => {
                               className="bg-purple-700 text-white p-2 hover:bg-purple-800 w-full">
                               Submit
                          </button>
+                         <p className='text-red-600 mt-2'>you can not change the details so check it once carefully before submit.</p>
                     </div>
                </form>
           </div>
