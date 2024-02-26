@@ -16,15 +16,15 @@ public class User {
 //    @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL)
 //    private Details details;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Education> educations;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Education> educations;
+//
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Experience> experiences;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Experience> experiences;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_skill", joinColumns = {@JoinColumn(name = "user_fk")}, inverseJoinColumns = {@JoinColumn(name = "skill_fk")})
-    private Set<Skill> skills;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "user_skill", joinColumns = {@JoinColumn(name = "user_fk")}, inverseJoinColumns = {@JoinColumn(name = "skill_fk")})
+//    private Set<Skill> skills;
 
     @Column(name = "email")
     private String email;
@@ -60,38 +60,38 @@ public class User {
 //        this.details = details;
 //    }
 
-    public List<Education> getEducation() {
-        return educations;
-    }
-
-    public void setEducation(List<Education> educations) {
-        this.educations = educations;
-    }
-
-    public List<Experience> getExperiences() {
-        return experiences;
-    }
-
-    public void setExperiences(List<Experience> experiences) {
-        this.experiences = experiences;
-    }
-
-    public Set<Skill> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
-    }
+//    public List<Education> getEducation() {
+//        return educations;
+//    }
+//
+//    public void setEducation(List<Education> educations) {
+//        this.educations = educations;
+//    }
+//
+//    public List<Experience> getExperiences() {
+//        return experiences;
+//    }
+//
+//    public void setExperiences(List<Experience> experiences) {
+//        this.experiences = experiences;
+//    }
+//
+//    public Set<Skill> getSkills() {
+//        return skills;
+//    }
+//
+//    public void setSkills(Set<Skill> skills) {
+//        this.skills = skills;
+//    }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
 //                ", details=" + details +
-                ", educations=" + educations +
-                ", experiences=" + experiences +
-                ", skills=" + skills +
+//                ", educations=" + educations +
+//                ", experiences=" + experiences +
+//                ", skills=" + skills +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';

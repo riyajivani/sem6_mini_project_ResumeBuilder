@@ -17,7 +17,7 @@ public class DetailServiceImpl implements DetailService{
     public void saveDetails(Details details) {detailsDAO.saveDetails(details);
     }
 
-    @Override
+    @Override @Transactional
     public Details getDetails(int id) {
         return detailsDAO.getDetails(id);
     }
