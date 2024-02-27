@@ -1,6 +1,6 @@
-import { hasFormSubmit } from '@testing-library/user-event/dist/utils';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const WorkExperience = () => {
      const [workExperience, setWorkExperience] = useState({
@@ -48,22 +48,29 @@ const WorkExperience = () => {
           });
      };
 
-     const handleFormSubmit = (e) => {
+     const handleFormSubmit = async (e) => {
           e.preventDefault();
-          localStorage.setItem('workExperience', JSON.stringify(workExperience));
-          // Clear the form after submission if needed
-          setWorkExperience({
-               experiences: [
-                    {
-                         jobTitle: '',
-                         organization: '',
-                         startYear: '',
-                         endYear: '',
-                         jobDescription: '',
-                    },
-               ],
-          });
-          navigate('/education');
+
+          const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+          try {
+               const res = await axios.post(`http://localhost:8080/storeexperiences/${id}`, workExperience.experiences)
+               console.log(res.data);
+
+               setWorkExperience({
+                    experiences: [
+                         {
+                              jobTitle: '',
+                              organization: '',
+                              startYear: '',
+                              endYear: '',
+                              jobDescription: '',
+                         },
+                    ],
+               });
+               navigate('/education');
+          } catch (e) {
+               console.log(e);
+          }
      };
 
      return (

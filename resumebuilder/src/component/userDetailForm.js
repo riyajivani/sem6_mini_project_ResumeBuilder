@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const UserDetailForm = () => {
      const [userDetails, setUserDetails] = useState({
-          image: '',
           firstName: '',
           lastName: '',
           email: '',
           phone: '',
+          about: '',
           address: '',
           city: '',
           state: '',
           pincode: '',
           role: '',
-          about: ''
+
      });
      const navigate = useNavigate();
 
@@ -25,23 +26,31 @@ const UserDetailForm = () => {
           });
      };
 
-     const handleFormSubmit = (e) => {
+     const handleFormSubmit = async (e) => {
           e.preventDefault();
-          localStorage.setItem('userDetails', JSON.stringify(userDetails));
-          setUserDetails({
-               image: '',
-               firstName: '',
-               lastName: '',
-               email: '',
-               phone: '',
-               address: '',
-               city: '',
-               state: '',
-               pincode: '',
-               role: '',
-               about: ''
-          });
-          navigate('/experience');
+
+          const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+          try {
+               const res = await axios.post(`http://localhost:8080/storedetail/${id}`, userDetails)
+               console.log(res.data);
+
+               setUserDetails({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: '',
+                    address: '',
+                    city: '',
+                    state: '',
+                    pincode: '',
+                    role: '',
+                    about: ''
+               });
+               navigate('/experience');
+
+          } catch (e) {
+               console.log(e);
+          }
      };
 
      return (

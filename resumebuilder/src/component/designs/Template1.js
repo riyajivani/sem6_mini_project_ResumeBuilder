@@ -1,12 +1,75 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import axios from 'axios';
 
 const Template1 = () => {
-     let user = JSON.parse(localStorage.getItem("userDetails"))
-     let education = JSON.parse(localStorage.getItem("educationDetails"))
-     let work = JSON.parse(localStorage.getItem("workExperience"))
-     let skills = JSON.parse(localStorage.getItem("selectedSkills"));
+     // let user = JSON.parse(localStorage.getItem("userDetails"))
+     // let education = JSON.parse(localStorage.getItem("educationDetails"))
+     // let work = JSON.parse(localStorage.getItem("workExperience"))
+     // let skills = JSON.parse(localStorage.getItem("selectedSkills"));
+
+     const [user, setUser] = useState(null);
+     const [education, setEducation] = useState([]);
+     const [work, setWork] = useState([]);
+     const [skills, setSkills] = useState([]);
+
+     useEffect(() => {
+
+          // Fetch user details
+          const fetchUserDetails = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const response = await axios.get(`http://localhost:8080/getdetail/${id}`);
+                    console.log(response.data);
+                    setUser(response.data);
+               } catch (error) {
+                    console.error('Error fetching user details:', error);
+               }
+          };
+
+          // Fetch education details
+          const fetchEducationDetails = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const response = await axios.get(`http://localhost:8080/geteducations/${id}`);
+                    console.log(response.data);
+                    setEducation(response.data);
+               } catch (error) {
+                    console.error('Error fetching education details:', error);
+               }
+          };
+
+          // Fetch work experience details
+          const fetchWorkExperience = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const response = await axios.get(`http://localhost:8080/getexperiences/${id}`);
+                    console.log(response.data);
+                    setWork(response.data);
+               } catch (error) {
+                    console.error('Error fetching work experience details:', error);
+               }
+          };
+
+          // Fetch skills
+          const fetchSkills = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const response = await axios.get(`http://localhost:8080/getuserskills/${id}`);
+                    console.log(response.data);
+                    setSkills(response.data);
+               } catch (error) {
+                    console.error('Error fetching skills:', error);
+               }
+          };
+
+          fetchUserDetails();
+          fetchEducationDetails();
+          fetchWorkExperience();
+          fetchSkills();
+     }, []);
+
      const pdfRef1 = useRef();
 
      const handleDownLoad1 = () => {
@@ -33,7 +96,7 @@ const Template1 = () => {
           <>
                <button onClick={handleDownLoad1} className='bg-purple-500 text-white p-2 rounded-md hover:bg-purple-700'>download</button>
 
-               <div id='resume-template-1' ref={pdfRef1} className="flex flex-col bg-white mt-5 mb-5 ml-52 mr-52 h-full"> {/* style={{ width: '600px' }}*/}
+               <div id='resume-template-1' ref={pdfRef1} className="flex flex-col bg-gray-200 mt-5 mb-5 ml-52 mr-52 h-full"> {/* style={{ width: '600px' }}*/}
                     <div className="flex flex-col items-start justify-start gap-2 p-4">
                          <h1 className="text-5xl font-normal text-start text-black mb-3" style={{ letterSpacing: '1rem' }}>{user?.firstName} <br /> {user?.lastName}</h1>
                          <p className='border-b-2 border-b-black w-full'></p>
@@ -47,7 +110,7 @@ const Template1 = () => {
                               <div>
                                    <h2 className="text-2xl font-bold mb-2 tracking-widest">ABOUT ME</h2>
                                    <p className='border-b-2 border-b-black w-full mb-4'></p>
-                                   <p className='tracking-tight text-justify'>{user?.about}</p>
+                                   <p className='tracking-tight text-justify w-full'>{user?.about}</p>
                               </div>
 
                               <div>
@@ -67,7 +130,7 @@ const Template1 = () => {
 
                                    <div className="flex items-start m-2">
                                         {/* <FaLocationDot className="mr-2 text-2xl" /> */}
-                                        <p className="mr-2 font-bold">Address:</p>
+                                        <p className="mr-1 font-bold">Address:</p>
                                         <p>{user?.address}</p>
                                    </div>
 
@@ -76,7 +139,7 @@ const Template1 = () => {
                               <div>
                                    <h2 className="text-2xl font-bold mb-2 tracking-widest">SKILLS</h2>
                                    <p className='border-b-2 border-b-black w-full mb-4'></p>
-                                   {skills.map((skill, index) => (
+                                   {skills && skills.map((skill, index) => (
                                         <p key={index} className='mb-1'>{skill}</p>
                                    ))}
                               </div>
@@ -88,7 +151,7 @@ const Template1 = () => {
                               <div className="mb-12">
                                    <h2 className="text-2xl font-bold mb-2 tracking-widest">EDUCATION</h2>
                                    <p className='border-b-2 border-b-black w-full mb-4'></p>
-                                   {education.education.map((ed, index) => (
+                                   {education && education.map((ed, index) => (
                                         <div className='mb-3' key={index}>
 
                                              <h3 className='text-lg font-bold'>{ed?.degree}</h3>
@@ -101,7 +164,7 @@ const Template1 = () => {
                               <div className="mb-3">
                                    <h2 className="text-2xl font-bold mb-2 tracking-widest">EXPERIENCES</h2>
                                    <p className='border-b-2 border-b-black w-full mb-4'></p>
-                                   {work.experiences.map((work, index) => (
+                                   {work && work.map((work, index) => (
                                         <div className='mb-4 flex flex-row justify-start' key={index}>
                                              {/* <div className='flex items-center'>
                                                   <GoDot className='mr-2' />

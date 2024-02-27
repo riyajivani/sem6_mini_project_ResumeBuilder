@@ -8,7 +8,7 @@ public class Details {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long detailId;
+    private int detailId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_fk")
@@ -22,12 +22,13 @@ public class Details {
     private String city;
     private String pincode;
     private String state;
+    private String role;
 
-    public Long getDetailId() {
+    public int getDetailId() {
         return detailId;
     }
 
-    public void setDetailId(Long detailId) {
+    public void setDetailId(int detailId) {
         this.detailId = detailId;
     }
 
@@ -111,6 +112,14 @@ public class Details {
         this.state = state;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Details{" +
@@ -125,6 +134,7 @@ public class Details {
                 ", city='" + city + '\'' +
                 ", pincode='" + pincode + '\'' +
                 ", state='" + state + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

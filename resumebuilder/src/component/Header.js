@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import Logo from '../assets/logo1.png'
+import Logo from '../assets/Picture1.png'
 import { AnimatePresence } from "framer-motion"
 // import MainSpinner from "./MainSpinner";
 import { motion } from 'framer-motion'

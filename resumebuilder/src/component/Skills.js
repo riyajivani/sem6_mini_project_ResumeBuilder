@@ -1,101 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IoClose } from "react-icons/io5";
+import axios from 'axios';
 
 const Skills = () => {
      const [selectedSkills, setSelectedSkills] = useState([]);
+     const [tag, setTag] = useState("");
      const data = JSON.parse(localStorage.getItem("ChosenTemplate"));
 
-     const skillsList = [
-          'Active Listening',
-          'Adaptability',
-          'Artificial Intelligence',
-          'Automation',
-          'Budgeting and Financial Management',
-          'Business Analysis',
-          'Client Relationship Management',
-          'Cloud Computing',
-          'Coding/Programming',
-          'Collaboration',
-          'Communication Skills',
-          'Conflict Resolution',
-          'Creativity',
-          'Critical Thinking',
-          'Cross-Cultural Competence',
-          'Cybersecurity',
-          'Data Analysis',
-          'Database Management',
-          'Decision Making',
-          'Emotional Intelligence',
-          'Empathy',
-          'Financial Management',
-          'Flexibility',
-          'Geographic Information System (GIS)',
-          'Git (Version Control)',
-          'Hardware Troubleshooting',
-          'IT Infrastructure Management',
-          'Leadership',
-          'Machine Learning',
-          'Market Research',
-          'Mobile App Development',
-          'Networking',
-          'Negotiation Skills',
-          'Presentation Skills',
-          'Problem-Solving',
-          'Project Management',
-          'Regulatory Compliance',
-          'Risk Management',
-          'Software Testing',
-          'Stress Management',
-          'Strategic Planning',
-          'System Integration',
-          'Technical Writing',
-          'Teamwork',
-          'Time Management',
-          'UI/UX Design',
-          'Vendor Management',
-          'Virtualization',
-          'Web Development'
-     ]
-
      const navigate = useNavigate();
+     const inputTag = useRef();
 
-     const handleSkillChange = (skill) => {
-          if (selectedSkills.includes(skill)) {
-               setSelectedSkills(selectedSkills.filter((selectedSkill) => selectedSkill !== skill));
-          } else {
-               setSelectedSkills([...selectedSkills, skill]);
-          }
-     };
-
-     const handleFormSubmit = (e) => {
+     const handleFormSubmit = async (e) => {
           e.preventDefault();
-          // Save selected skills to local storage
-          localStorage.setItem('selectedSkills', JSON.stringify(selectedSkills));
 
-          navigate(`/resume/${data?.name}?templateId=${data?.id}`)
+          const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+          try {
+               const res = await axios.post(`http://localhost:8080/storeuserskills/${id}`, selectedSkills)
+               console.log(res.data);
+
+               setSelectedSkills(null);
+
+               navigate(`/resume/${data?.name}?templateId=${data?.id}`)
+
+          } catch (e) {
+               console.log(e);
+          }
+
+
+          // navigate(`/resume/${data?.name}?templateId=${data?.id}`)
      };
+
+     const addTags = (e) => {
+          if (e.key === 'Enter' && tag) {
+               e.preventDefault()
+               // console.log(tag);
+               setSelectedSkills([...selectedSkills, tag]);
+               setTag("");
+               inputTag.current.focus();
+          }
+     }
+
+     const removeTag = (skill) => {
+          let remainSkill = selectedSkills.filter((s) => s !== skill);
+          setSelectedSkills(remainSkill);
+     }
 
      return (
           <div className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-purple-700 rounded shadow-md">
                <h2 className="text-2xl mb-4 font-bold text-center text-purple-700">Skills Selection</h2>
                <form onSubmit={handleFormSubmit}>
+
                     <div className="flex flex-wrap">
-                         {skillsList.map((skill) => (
-                              <label key={skill} className="mr-4 mb-2 inline-flex items-center">
-                                   <input
-                                        type="checkbox"
-                                        name={skill}
-                                        checked={selectedSkills.includes(skill)}
-                                        onChange={() => handleSkillChange(skill)}
-                                        className="mr-2 accent-purple-700"
-                                   />
-                                   {skill}
-                              </label>
-                         ))}
+                         <input
+                              type="text"
+                              ref={inputTag}
+                              value={tag}
+                              placeholder='add skill'
+                              onChange={(e) => setTag(e.target.value)}
+                              onKeyDown={addTags}
+                              className="w-full border border-purple-700 p-2 outline-none active:border-purple-700"
+                         />
                     </div>
-                    <div className="mt-4 ">
-                         <strong className='text-purple-700'>Selected Skills:</strong> {selectedSkills.join(', ')}
+
+                    <div className="mt-4 flex flex-col">
+                         <strong className='text-purple-700'>Selected Skills:</strong>
+
+                         <div className='flex flex-wrap my-2'>
+                              {selectedSkills.map((skill, index) => {
+                                   return (
+                                        <div className='bg-purple-200 border border-purple-700 m-1 px-1 w-fit rounded-md flex items-center justify-between gap-1' key={index}>
+                                             <p className=' text-lg text-purple-950'>{skill}</p>
+                                             <IoClose className='text-lg text-purple-950 bg-purple-300 rounded-md hover:bg-purple-950 hover:text-red-500' onClick={() => removeTag(skill)} />
+                                        </div>
+                                   )
+                              })}
+                         </div>
+
                     </div>
+
                     <div className="mt-4">
                          <button
                               type="submit"
@@ -110,3 +93,4 @@ const Skills = () => {
 };
 
 export default Skills;
+

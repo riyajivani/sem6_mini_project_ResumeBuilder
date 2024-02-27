@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const EducationDetail = () => {
      const [educationDetails, setEducationDetails] = useState({
@@ -49,23 +50,30 @@ const EducationDetail = () => {
           });
      };
 
-     const handleFormSubmit = (e) => {
+     const handleFormSubmit = async (e) => {
           e.preventDefault();
-          localStorage.setItem('educationDetails', JSON.stringify(educationDetails));
-          // Clear the form after submission if needed
-          setEducationDetails({
-               education: [
-                    {
-                         educationType: '',
-                         degree: '',
-                         university: '',
-                         startYear: '',
-                         endYear: '',
-                    },
-               ],
-          });
 
-          navigate('/skills')
+          const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+          try {
+               const res = await axios.post(`http://localhost:8080/storeeducations/${id}`, educationDetails.education)
+               console.log(res.data);
+
+               setEducationDetails({
+                    education: [
+                         {
+                              educationType: '',
+                              degree: '',
+                              university: '',
+                              startYear: '',
+                              endYear: '',
+                         },
+                    ],
+               });
+
+               navigate('/skills')
+          } catch (e) {
+               console.log(e);
+          }    
      };
 
      return (
