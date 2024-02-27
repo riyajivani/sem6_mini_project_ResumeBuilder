@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from '../assets/logo1.png';
+import Logo from '../assets/Picture1.png';
 import { Footer } from "../component";
 import { FaChevronRight } from 'react-icons/fa6'
 import axios from "axios";

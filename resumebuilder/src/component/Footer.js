@@ -1,13 +1,11 @@
 import React from "react";
-import Logo from '../assets/logo1.png'
 import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
     <div className="w-full flex items-center justify-between border-t border-gray-300">
 
-      <div className="flex flex-col items-start justify-center gap-2 py-3">
-        <img src={Logo} className="w-10 h-10 object-contain" alt="" />
+      <div className="flex flex-col items-center justify-center">
         <p className="text-xs">©All Rights Resrved By RIYA JIVANI</p>
       </div>
 
