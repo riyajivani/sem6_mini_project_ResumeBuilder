@@ -4,8 +4,9 @@ import in.riyajivani.resumebuilder.resumebuilder.model.Skill;
 
 import java.util.List;
 
-public interface SkillDAO {
-    Skill saveSkill(String skillName);
+public interface UserSkillDAO {
 
-    Skill findSkill(String name);
+    public void addUserSkills(int userId, List<String> skillNames);
+
+    List<String> getUserSkills(int userId);
 }

@@ -9,7 +9,7 @@ public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long skillId;
+    private int skillId;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_skill", joinColumns={@JoinColumn(name = "skill_fk")}, inverseJoinColumns ={@JoinColumn(name = "user_fk")})
@@ -17,11 +17,11 @@ public class Skill {
 
     private String skill;
 
-    public Long getSkillId() {
+    public int getSkillId() {
         return skillId;
     }
 
-    public void setSkillId(Long skillId) {
+    public void setSkillId(int skillId) {
         this.skillId = skillId;
     }
 

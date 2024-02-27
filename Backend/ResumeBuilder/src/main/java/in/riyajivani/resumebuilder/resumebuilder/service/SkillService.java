@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SkillService {
 
-    void saveSkill(Skill skill);
+    Skill saveSkill(String skillName);
 
-    List<Skill> getSkill(int id);
+    Skill findSkill(String name);
 }

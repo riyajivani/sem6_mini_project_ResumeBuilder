@@ -14,12 +14,12 @@ public class SkillServiceImpl implements SkillService{
     @Autowired
     private SkillDAO skillDAO;
     @Override @Transactional
-    public void saveSkill(Skill skill) {
-        skillDAO.saveSkill(skill);
+    public Skill saveSkill(String skillName) {
+        return skillDAO.saveSkill(skillName);
     }
 
     @Override @Transactional
-    public List<Skill> getSkill(int id) {
-        return skillDAO.getSkill(id);
+    public Skill findSkill(String name) {
+        return skillDAO.findSkill(name);
     }
 }
