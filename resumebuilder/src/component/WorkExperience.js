@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const WorkExperience = () => {
+
      const [workExperience, setWorkExperience] = useState({
           experiences: [
                {
@@ -15,6 +16,26 @@ const WorkExperience = () => {
           ],
      });
      const navigate = useNavigate();
+     const [length, setLength] = useState(0);
+
+
+     useEffect(() => {
+          const fetchWorkExperience = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const res = await axios.get(`http://localhost:8080/getexperiences/${id}`);
+                    const userExpData = res.data;
+                    if (userExpData) {
+                         navigate('/education');
+                    } else {
+                         setLength(1);
+                    }
+               } catch (error) {
+                    setLength(1);
+               }
+          };
+          fetchWorkExperience();
+     }, [])
 
      const handleInputChange = (e, index) => {
           const { name, value } = e.target;
@@ -73,7 +94,7 @@ const WorkExperience = () => {
           }
      };
 
-     return (
+     return length > 0 ? (
           <div className="max-w-2xl mx-auto mt-5 p-4 bg-white border border-purple-700 rounded shadow-md">
                <h2 className="text-2xl mb-4 font-bold text-center text-purple-700">
                     Work Experience - {workExperience.experiences.length}
@@ -88,7 +109,7 @@ const WorkExperience = () => {
                                         name="jobTitle"
                                         value={experience.jobTitle}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -98,7 +119,7 @@ const WorkExperience = () => {
                                         name="organization"
                                         value={experience.organization}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -108,7 +129,7 @@ const WorkExperience = () => {
                                         name="startYear"
                                         value={experience.startYear}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -118,7 +139,7 @@ const WorkExperience = () => {
                                         name="endYear"
                                         value={experience.endYear}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-8 col-span-2">
@@ -127,7 +148,7 @@ const WorkExperience = () => {
                                         name="jobDescription"
                                         value={experience.jobDescription}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2 resize-none"
+                                        className="w-full border p-2 resize-none border-purple-700 outline-none"
                                         rows="4"
                                    />
                               </div>
@@ -160,7 +181,7 @@ const WorkExperience = () => {
                     </div>
                </div>
           </div>
-     );
+     ) : null;
 };
 
 export default WorkExperience;

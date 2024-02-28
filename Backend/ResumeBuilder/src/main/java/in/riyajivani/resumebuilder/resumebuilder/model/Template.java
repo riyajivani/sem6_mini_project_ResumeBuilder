@@ -2,27 +2,27 @@ package in.riyajivani.resumebuilder.resumebuilder.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "templates")
 public class Template {
 
     @Id
-    @Column(name = "tid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int templateId;
-
-    @Column(name = "tname")
+    private int id;
     private String name;
-
-    @Column(name ="imageurl")
     private String url;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_template", joinColumns={@JoinColumn(name = "template_fk")}, inverseJoinColumns ={@JoinColumn(name = "user_fk")})
+    private Set<User> users;
     public int getTemplateId() {
-        return templateId;
+        return id;
     }
 
     public void setTemplateId(int templateId) {
-        this.templateId = templateId;
+        this.id = templateId;
     }
 
     public String getName() {
@@ -41,12 +41,21 @@ public class Template {
         this.url = url;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     @Override
     public String toString() {
         return "Template{" +
-                "templateId=" + templateId +
+                "templateId=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", users=" + users +
                 '}';
     }
 }

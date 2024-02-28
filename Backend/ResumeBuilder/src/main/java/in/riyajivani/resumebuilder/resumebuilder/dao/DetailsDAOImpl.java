@@ -26,4 +26,12 @@ public class DetailsDAOImpl implements DetailsDAO{
         query.setParameter("id", id);
         return query.uniqueResult();
     }
+
+    @Override
+    public void deleteDetails(int userId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<?> query = currentSession.createQuery("delete from Details where user.id = :userId");
+        query.setParameter("userId", userId);
+        query.executeUpdate();
+    }
 }

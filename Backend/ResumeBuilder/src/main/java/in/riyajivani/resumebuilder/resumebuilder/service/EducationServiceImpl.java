@@ -23,4 +23,9 @@ public class EducationServiceImpl implements EducationService{
     public List<Education> getEducation(int id) {
         return educationDAO.getEducation(id);
     }
+
+    @Override @Transactional
+    public void deleteEducations(int userId) {
+        educationDAO.deleteEducations(userId);
+    }
 }

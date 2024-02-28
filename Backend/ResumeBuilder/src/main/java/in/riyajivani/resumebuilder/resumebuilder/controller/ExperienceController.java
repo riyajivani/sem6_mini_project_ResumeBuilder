@@ -30,12 +30,17 @@ public class ExperienceController {
         }
         else
         {
-            for (Experience experience : experiences) {
-                experience.setUser(user);
-                experienceService.saveExperience(experience);
+            if(!experiences.isEmpty()){
+                for (Experience experience : experiences) {
+                    experience.setUser(user);
+                    experienceService.saveExperience(experience);
+                }
+
+                return ResponseEntity.ok("Experiences stored successfully");
+            }else{
+                return ResponseEntity.badRequest().body("experiences are empty");
             }
 
-            return ResponseEntity.ok("Experiences stored successfully");
         }
     }
 
@@ -45,10 +50,20 @@ public class ExperienceController {
         List<Experience> experiences = experienceService.getExperience(id);
 
         if (experiences.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("educations not found");
         }
         else {
             return ResponseEntity.ok(experiences);
+        }
+    }
+
+    @DeleteMapping("/deleteexperiences/{id}")
+    public ResponseEntity<String> deleteExperiences(@PathVariable int id){
+        try {
+            experienceService.deleteExperiences(id);
+            return ResponseEntity.ok("User experiences deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to delete user experiences");
         }
     }
 }

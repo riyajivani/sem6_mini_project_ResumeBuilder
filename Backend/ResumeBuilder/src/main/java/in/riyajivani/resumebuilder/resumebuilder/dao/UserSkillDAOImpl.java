@@ -52,4 +52,13 @@ public class UserSkillDAOImpl implements UserSkillDAO {
                 .setParameter("userId", userId)
                 .getResultList();
     }
+
+    @Override
+    public void deleteUserSkills(int userId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.createQuery("delete from UserSkill where user.id = :userId")
+                .setParameter("userId", userId)
+                .executeUpdate();
+    }
 }

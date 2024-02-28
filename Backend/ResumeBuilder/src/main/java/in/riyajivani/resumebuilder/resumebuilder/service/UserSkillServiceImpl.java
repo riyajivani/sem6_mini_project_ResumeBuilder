@@ -29,4 +29,9 @@ public class UserSkillServiceImpl implements UserSkillService{
     {
         return userSkillDAO.getUserSkills(userId);
     }
+
+    @Override @Transactional
+    public void deleteUserSkills(int userId) {
+        userSkillDAO.deleteUserSkills(userId);
+    }
 }

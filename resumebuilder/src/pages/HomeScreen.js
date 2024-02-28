@@ -14,11 +14,11 @@ const HomeScreen = () => {
       <main className='w-full'>
         <Suspense fallback={<MainSpinner/>}>
           <Routes>
-            <Route path='/' element={<HomeContainer/>} />
-            <Route path='/template/create' element={<CreateTemplates/>} />
-            <Route path='/profile/:uid' element={<UserProfile/>} />
-            <Route path='/resume/*' element={<CreateResume/>} />
-            <Route path='/resumeDetail/:templateID' element={<TemplateDesignPinDetail/>} />
+            <Route path='/' element={<HomeContainer />} />
+            <Route path='/template/create' element={<CreateTemplates />} />
+            <Route path='/profile/:uid' element={<UserProfile />} />
+            <Route path='/resume/*' element={<CreateResume />} />
+            <Route path='/resumeDetail/:templateID' element={<TemplateDesignPinDetail />} />
           </Routes>
         </Suspense>
       </main>

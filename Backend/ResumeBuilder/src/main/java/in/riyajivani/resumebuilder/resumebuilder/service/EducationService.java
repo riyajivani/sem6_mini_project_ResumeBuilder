@@ -10,4 +10,6 @@ public interface EducationService {
 
     List<Education> getEducation(int id);
 
+    void deleteEducations(int userId);
+
 }

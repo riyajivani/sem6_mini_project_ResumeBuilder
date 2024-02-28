@@ -12,7 +12,7 @@ const TemplateDesignPin = ({ data, index }) => {
 
      const handleRouteNavigation = () => {
           localStorage.setItem("ChosenTemplate", JSON.stringify(data));
-          navigate(`/resumeDetail/:${data?.templateId}`, { replace: true })
+          navigate(`/home/resumeDetail/:${data?.templateId}`, { replace: true })
      }
 
      return <motion.div key={data?.id} {...scaleInOut(index)}>

@@ -1,12 +1,25 @@
-import React, { Fragment } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { FaHouse } from 'react-icons/fa6'
-import { BiSolidFolderPlus, BiSolidHeart } from 'react-icons/bi';
-import { initialTags } from '../utils/helper'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const TemplateDesignPinDetail = () => {
 
   const data = JSON.parse(localStorage.getItem("ChosenTemplate"));
+  const navigate = useNavigate();
+
+  const handleUseTemplate = async () => {
+    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+    try {
+      console.log(data);
+      const res = await axios.post(`http://localhost:8080/storeusertemplate/${id}`, data)
+      console.log(res.data);
+      navigate('/userdetail');
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div className='w-full flex flex-col items-center justify-start px-4 py-12'>
@@ -14,7 +27,7 @@ const TemplateDesignPinDetail = () => {
       {/* bread crump */}
       <div className='w-full flex items-center pb-8 gap-2'>
 
-        <Link to={"/"} className='flex items-center justify-center gap-2 text-txtPrimary'>
+        <Link to={"/home"} className='flex items-center justify-center gap-2 text-txtPrimary'>
           <FaHouse />Home
         </Link>
         <p>/</p>
@@ -39,7 +52,7 @@ const TemplateDesignPinDetail = () => {
           <div className='w-full h-72 bg-blue-200 rounded-md overflow-hidden relative' style={{ background: "url(https://cdn.pixabay.com/photo/2018/05/04/15/23/poppies-3374193_1280.jpg)", backgroundPosition: "center", backgroundSize: "cover" }}>
 
             <div className='absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.4)]'>
-              <Link to={"/"} className='px-4 py-2 rounded-md border-2 border-gray-50 text-white'>
+              <Link to={"/home"} className='px-4 py-2 rounded-md border-2 border-gray-50 text-white'>
                 Discover More
               </Link>
             </div>
@@ -48,9 +61,9 @@ const TemplateDesignPinDetail = () => {
 
           {/* edit the template */}
 
-          <Link to='/userdetail' className='w-full px-4 py-3 rounded-md flex items-center justify-center bg-purple-800 cursor-pointer'>
+          <div onClick={handleUseTemplate} className='w-full px-4 py-3 rounded-md flex items-center justify-center bg-purple-800 cursor-pointer'>
             <p className='text-white font-semibold text-lg'>Edit this template</p>
-          </Link>
+          </div>
 
         </div>
       </div>

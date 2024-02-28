@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from "react-icons/io5";
 import axios from 'axios';
@@ -10,6 +10,25 @@ const Skills = () => {
 
      const navigate = useNavigate();
      const inputTag = useRef();
+     const [length, setLength] = useState(0);
+
+     useEffect(() => {
+          const fetchSkills = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const res = await axios.get(`http://localhost:8080/getuserskills/${id}`);
+                    const userSkillData = res.data;
+                    if (userSkillData) {
+                         navigate(`/home/resume/${data?.name}?templateId=${data?.templateId}`)
+                    } else {
+                         setLength(1);
+                    }
+               } catch (error) {
+                    setLength(1);
+               }
+          };
+          fetchSkills();
+     }, [])
 
      const handleFormSubmit = async (e) => {
           e.preventDefault();
@@ -21,7 +40,7 @@ const Skills = () => {
 
                setSelectedSkills(null);
 
-               navigate(`/resume/${data?.name}?templateId=${data?.id}`)
+               navigate(`/home/resume/${data?.name}?templateId=${data?.templateId}`)
 
           } catch (e) {
                console.log(e);
@@ -46,7 +65,7 @@ const Skills = () => {
           setSelectedSkills(remainSkill);
      }
 
-     return (
+     return length > 0 ? (
           <div className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-purple-700 rounded shadow-md">
                <h2 className="text-2xl mb-4 font-bold text-center text-purple-700">Skills Selection</h2>
                <form onSubmit={handleFormSubmit}>
@@ -89,7 +108,7 @@ const Skills = () => {
                     </div>
                </form>
           </div>
-     );
+     ) : null;
 };
 
 export default Skills;

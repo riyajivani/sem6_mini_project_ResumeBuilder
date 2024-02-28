@@ -36,10 +36,24 @@ public class UserSkillController {
 
         if(userService.getUserById(id)!=null){
             List<String> skills = userSkillService.getUserSkills(id);
-            return ResponseEntity.ok(skills);
+            if(skills.isEmpty()){
+                return ResponseEntity.badRequest().body("skills not found");
+            }else {
+                return ResponseEntity.ok(skills);
+            }
         }
         else{
             return ResponseEntity.badRequest().body("User not found or skills are empty");
+        }
+    }
+
+    @DeleteMapping("/deleteskills/{id}")
+    public ResponseEntity<String> deleteExperiences(@PathVariable int id){
+        try {
+            userSkillService.deleteUserSkills(id);
+            return ResponseEntity.ok("User skills deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to delete user skills");
         }
     }
 }

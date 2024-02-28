@@ -24,4 +24,9 @@ public class ExperienceServiceImpl implements ExperienceService{
     public List<Experience> getExperience(int id) {
         return experienceDAO.getExperience(id);
     }
+
+    @Override @Transactional
+    public void deleteExperiences(int userId) {
+        experienceDAO.deleteExperiences(userId);
+    }
 }

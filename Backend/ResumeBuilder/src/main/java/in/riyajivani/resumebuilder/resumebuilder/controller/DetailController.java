@@ -49,4 +49,15 @@ public class DetailController {
             return ResponseEntity.badRequest().body("user details not exist");
         }
     }
+
+    @DeleteMapping("/deletedetails/{id}")
+    public ResponseEntity<String> deleteDetail(@PathVariable int id){
+        try {
+            // Call service method to delete details by user ID
+            detailService.deleteDetails(id);
+            return ResponseEntity.ok("User details deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to delete user details");
+        }
+    }
 }

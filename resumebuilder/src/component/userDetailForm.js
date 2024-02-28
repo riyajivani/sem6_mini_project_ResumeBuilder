@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,6 +17,25 @@ const UserDetailForm = () => {
 
      });
      const navigate = useNavigate();
+     const [length, setLength] = useState(0);
+
+     useEffect(() => {
+          const fetchUserDetails = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const res = await axios.get(`http://localhost:8080/getdetail/${id}`);
+                    const userDetailData = res.data;
+                    if (userDetailData) {
+                         navigate('/experience');
+                    } else {
+                         setLength(1);
+                    }
+               } catch (error) {
+                    setLength(1);
+               }
+          };
+          fetchUserDetails();
+     }, [])
 
      const handleInputChange = (e) => {
           const { name, value } = e.target;
@@ -53,20 +72,21 @@ const UserDetailForm = () => {
           }
      };
 
-     return (
+     return length > 0 ? (
+
           <div className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-purple-700 rounded shadow-md">
                <h2 className="text-2xl mb-4 font-bold text-center text-purple-700">User Details</h2>
                <div className="grid grid-cols-2 gap-4">
                     {/* <div className="mb-4">
-                         <label className="block mb-2">Image URL:</label>
-                         <input
-                              type="text"
-                              name="image"
-                              value={userDetails.image}
-                              onChange={handleInputChange}
-                              className="w-full border p-2"
-                         />
-                    </div> */}
+                              <label className="block mb-2">Image URL:</label>
+                              <input
+                                   type="text"
+                                   name="image"
+                                   value={userDetails.image}
+                                   onChange={handleInputChange}
+                                   className="w-full border p-2"
+                              />
+                         </div> */}
                     <div className="mb-4">
                          <label className="block mb-2">First Name:</label>
                          <input
@@ -74,7 +94,7 @@ const UserDetailForm = () => {
                               name="firstName"
                               value={userDetails.firstName}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border border-purple-700 outline-none p-2 "
                          />
                     </div>
                     <div className="mb-4">
@@ -84,7 +104,7 @@ const UserDetailForm = () => {
                               name="lastName"
                               value={userDetails.lastName}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
                     <div className="mb-4">
@@ -94,7 +114,7 @@ const UserDetailForm = () => {
                               name="email"
                               value={userDetails.email}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
                     <div className="mb-4">
@@ -104,7 +124,7 @@ const UserDetailForm = () => {
                               name="phone"
                               value={userDetails.phone}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
                     <div className="mb-4">
@@ -114,7 +134,7 @@ const UserDetailForm = () => {
                               name="role"
                               value={userDetails.role}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
                     <div className="mb-8 col-span-2">
@@ -123,7 +143,7 @@ const UserDetailForm = () => {
                               name="address"
                               value={userDetails.address}
                               onChange={handleInputChange}
-                              className="w-full border p-2 resize-none"
+                              className="w-full border p-2 resize-none border-purple-700 outline-none"
                               rows="4"
                          />
                     </div>
@@ -133,7 +153,7 @@ const UserDetailForm = () => {
                               name="about"
                               value={userDetails.about}
                               onChange={handleInputChange}
-                              className="w-full border p-2 resize-none"
+                              className="w-full border p-2 resize-none border-purple-700 outline-none"
                               rows="4"
                          />
                     </div>
@@ -144,7 +164,7 @@ const UserDetailForm = () => {
                               name="city"
                               value={userDetails.city}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
                     <div className="mb-4">
@@ -154,7 +174,7 @@ const UserDetailForm = () => {
                               name="state"
                               value={userDetails.state}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
                     <div className="mb-4">
@@ -164,7 +184,7 @@ const UserDetailForm = () => {
                               name="pincode"
                               value={userDetails.pincode}
                               onChange={handleInputChange}
-                              className="w-full border p-2"
+                              className="w-full border p-2 border-purple-700 outline-none"
                          />
                     </div>
 
@@ -178,7 +198,7 @@ const UserDetailForm = () => {
                     </div>
                </div>
           </div>
-     );
+     ) : null;
 };
 
 export default UserDetailForm

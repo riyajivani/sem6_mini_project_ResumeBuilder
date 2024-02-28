@@ -28,4 +28,12 @@ public class EducationDAOImpl implements EducationDAO{
         query.setParameter("id", id);
         return query.list();
     }
+
+    @Override
+    public void deleteEducations(int userId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<?> query = currentSession.createQuery("delete from Education where user.id = :userId");
+        query.setParameter("userId", userId);
+        query.executeUpdate();
+    }
 }

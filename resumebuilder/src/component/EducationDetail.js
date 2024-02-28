@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -16,6 +16,25 @@ const EducationDetail = () => {
      });
 
      const navigate = useNavigate();
+     const [length, setLength] = useState(0);
+
+     useEffect(() => {
+          const fetchEducationDetails = async () => {
+               try {
+                    const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
+                    const res = await axios.get(`http://localhost:8080/geteducations/${id}`);
+                    const userEduData = res.data;
+                    if (userEduData) {
+                         navigate('/skills')
+                    } else {
+                         setLength(1);
+                    }
+               } catch (error) {
+                    setLength(1);
+               }
+          };
+          fetchEducationDetails();
+     }, [])
 
      const handleInputChange = (e, index) => {
           const { name, value } = e.target;
@@ -76,7 +95,7 @@ const EducationDetail = () => {
           }    
      };
 
-     return (
+     return length > 0 ? (
           <div className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-purple-700 rounded shadow-md">
                <h2 className="text-2xl mb-4 font-bold text-center text-purple-700">Education Details</h2>
                <form onSubmit={handleFormSubmit} className="mb-4">
@@ -89,7 +108,7 @@ const EducationDetail = () => {
                                         name="educationType"
                                         value={education.educationType}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -99,7 +118,7 @@ const EducationDetail = () => {
                                         name="degree"
                                         value={education.degree}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -109,7 +128,7 @@ const EducationDetail = () => {
                                         name="university"
                                         value={education.university}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -119,7 +138,7 @@ const EducationDetail = () => {
                                         name="startYear"
                                         value={education.startYear}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="mb-4">
@@ -129,7 +148,7 @@ const EducationDetail = () => {
                                         name="endYear"
                                         value={education.endYear}
                                         onChange={(e) => handleInputChange(e, index)}
-                                        className="w-full border p-2"
+                                        className="w-full border p-2 border-purple-700 outline-none"
                                    />
                               </div>
                               <div className="col-span-2 flex justify-center">
@@ -161,7 +180,7 @@ const EducationDetail = () => {
                     </div>
                </form>
           </div>
-     );
+     ) : null;
 };
 
 export default EducationDetail;

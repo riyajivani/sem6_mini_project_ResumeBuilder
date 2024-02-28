@@ -30,4 +30,12 @@ public class ExperienceDAOImpl implements ExperienceDAO{
         query.setParameter("id", id);
         return query.list();
     }
+
+    @Override
+    public void deleteExperiences(int userId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+        Query<?> query = currentSession.createQuery("delete from Experience where user.id = :userId");
+        query.setParameter("userId", userId);
+        query.executeUpdate();
+    }
 }

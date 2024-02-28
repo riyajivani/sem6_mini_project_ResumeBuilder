@@ -31,7 +31,7 @@ public class TemplateDAOImpl implements TemplateDAO{
     @Override
     public Template getTmpByName(String name){
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Template> query = currentSession.createQuery("from Template where name =: name", Template.class);
+        Query<Template> query = currentSession.createQuery("from Template where name=:name", Template.class);
         query.setParameter("name", name);
         return query.uniqueResult();
     }

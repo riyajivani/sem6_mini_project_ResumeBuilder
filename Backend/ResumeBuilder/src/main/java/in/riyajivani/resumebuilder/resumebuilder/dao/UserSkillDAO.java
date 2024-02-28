@@ -9,4 +9,6 @@ public interface UserSkillDAO {
     public void addUserSkills(int userId, List<String> skillNames);
 
     List<String> getUserSkills(int userId);
+
+    void deleteUserSkills(int userId);
 }

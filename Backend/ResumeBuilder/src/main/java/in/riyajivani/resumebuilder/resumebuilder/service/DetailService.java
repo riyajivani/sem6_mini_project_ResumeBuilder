@@ -6,4 +6,6 @@ public interface DetailService {
 
     void saveDetails(Details details);
     Details getDetails(int id);
+
+    void deleteDetails(int userId);
 }

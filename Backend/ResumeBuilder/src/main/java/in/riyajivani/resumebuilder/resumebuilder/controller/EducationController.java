@@ -31,12 +31,16 @@ public class EducationController {
         }
         else
         {
-            for (Education education : educations) {
-                education.setUser(user);
-                educationService.saveEducation(education);
-            }
+            if(!educations.isEmpty()) {
+                for (Education education : educations) {
+                    education.setUser(user);
+                    educationService.saveEducation(education);
+                }
 
-            return ResponseEntity.ok("Educations stored successfully");
+                return ResponseEntity.ok("Educations stored successfully");
+            }else{
+                return ResponseEntity.badRequest().body("experiences are empty");
+            }
         }
     }
 
@@ -46,10 +50,20 @@ public class EducationController {
         List<Education> educations = educationService.getEducation(id);
 
         if (educations.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().body("educations not found");
         }
         else {
             return ResponseEntity.ok(educations);
+        }
+    }
+
+    @DeleteMapping("/deleteeducations/{id}")
+    public ResponseEntity<String> deleteEducations(@PathVariable int id){
+        try {
+            educationService.deleteEducations(id);
+            return ResponseEntity.ok("User educations deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to delete user educations");
         }
     }
 }

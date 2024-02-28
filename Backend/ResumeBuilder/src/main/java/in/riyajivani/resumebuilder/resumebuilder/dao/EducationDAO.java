@@ -10,4 +10,6 @@ public interface EducationDAO {
     void saveEducation(Education education);
 
     List<Education> getEducation(int id);
+
+    void deleteEducations(int userId);
 }

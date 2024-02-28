@@ -11,7 +11,6 @@ const HomeContainer = () => {
   const fetchTemp = async () => {
     let response = await axios.get("http://localhost:8080/gettemplate");
     setTemplates(response.data)
-    console.log(response.data);
   }
   useEffect(() => { fetchTemp() }, [])
 
@@ -19,6 +18,7 @@ const HomeContainer = () => {
   return (
     <div className='w-full px-4 lg:px-12 py-6 flex flex-col items-center justify-start'>
 
+      <h1 className='mb-6 text-xl text-purple-800 border-b-2 border-purple-700'>Templates for you</h1>
       {/* render those templates - RESUME PIN */}
       <Fragment>
         <div className='w-full grid grid-cols-1 sm:w-fit sm:grid-cols-2 md:grid-cols-5 2xl:grid-cols-5 gap-6'>

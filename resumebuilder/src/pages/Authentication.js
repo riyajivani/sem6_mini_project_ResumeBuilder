@@ -23,9 +23,10 @@ const Authentication = () => {
 
       console.log(res);
       localStorage.setItem("loggedInUser", JSON.stringify(res.data));
-      navigate("/")
+      navigate("/home")
     }
     catch (e) {
+      toast("signup first");
       console.log(e);
     }
   }

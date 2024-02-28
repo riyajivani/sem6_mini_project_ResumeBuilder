@@ -12,4 +12,6 @@ public interface ExperienceDAO {
 
     List<Experience> getExperience(int id);
 
+    void deleteExperiences(int userId);
+
 }

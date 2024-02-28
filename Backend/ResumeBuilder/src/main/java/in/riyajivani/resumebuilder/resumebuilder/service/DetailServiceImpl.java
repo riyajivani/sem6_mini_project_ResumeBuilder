@@ -21,4 +21,9 @@ public class DetailServiceImpl implements DetailService{
     public Details getDetails(int id) {
         return detailsDAO.getDetails(id);
     }
+
+    @Override @Transactional
+    public void deleteDetails(int userId) {
+        detailsDAO.deleteDetails(userId);
+    }
 }

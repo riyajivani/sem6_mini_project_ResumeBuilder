@@ -9,4 +9,6 @@ public interface ExperienceService {
 
     void saveExperience(Experience experiences);
     List<Experience> getExperience(int id);
+
+    void deleteExperiences(int userId);
 }

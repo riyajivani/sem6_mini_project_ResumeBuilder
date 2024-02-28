@@ -11,4 +11,6 @@ public interface UserSkillService {
 
     List<String> getUserSkills(int userId);
 
+    void deleteUserSkills(int userId);
+
 }
