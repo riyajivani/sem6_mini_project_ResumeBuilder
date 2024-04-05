@@ -1,6 +1,7 @@
 # compile the application
 FROM maven:3.8.6-openjdk-18 AS build
 WORKDIR /app
+RUN /bin/bash
 COPY . .
 RUN ./mvnw clean package -DskipTests
 
