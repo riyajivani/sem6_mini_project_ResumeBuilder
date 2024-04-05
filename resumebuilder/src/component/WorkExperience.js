@@ -152,9 +152,8 @@ const WorkExperience = () => {
                                         rows="4"
                                    />
                               </div>
-                         </div>
-                    ))}
-                    <div className="col-span-2 flex justify-center">
+
+                              <div className="col-span-2 flex justify-center">
                          <button
                               type="button"
                               onClick={handleRemoveExperience}
@@ -170,6 +169,9 @@ const WorkExperience = () => {
                               Add Experience
                          </button>
                     </div>
+                         </div>
+                    ))}
+
                     <div className="col-span-2 mt-4">
                          <button
                               onClick={handleFormSubmit}
