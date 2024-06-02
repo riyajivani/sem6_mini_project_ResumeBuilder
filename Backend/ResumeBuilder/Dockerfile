@@ -1,7 +1,7 @@
 # compile the application
 FROM maven:3.8.6-openjdk-18 AS build
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Pprod -DskipTests
 
 # run the application
 FROM openjdk:18-ea-8-jdk-slim
