@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const dburl = process.env.REACT_APP_URL
 
 const UserDetailForm = () => {
      const [userDetails, setUserDetails] = useState({
@@ -23,7 +24,7 @@ const UserDetailForm = () => {
           const fetchUserDetails = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const res = await axios.get(`http://localhost:8080/getdetail/${id}`);
+                    const res = await axios.get(`${dburl}/getdetail/${id}`);
                     const userDetailData = res.data;
                     if (userDetailData) {
                          navigate('/experience');
@@ -50,7 +51,7 @@ const UserDetailForm = () => {
 
           const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
           try {
-               const res = await axios.post(`http://localhost:8080/storedetail/${id}`, userDetails)
+               const res = await axios.post(`${dburl}/storedetail/${id}`, userDetails)
                console.log(res.data);
 
                setUserDetails({

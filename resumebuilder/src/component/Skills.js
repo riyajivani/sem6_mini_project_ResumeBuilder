@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoClose } from "react-icons/io5";
 import axios from 'axios';
+const dburl = process.env.REACT_APP_URL
 
 const Skills = () => {
      const [selectedSkills, setSelectedSkills] = useState([]);
@@ -16,7 +17,7 @@ const Skills = () => {
           const fetchSkills = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const res = await axios.get(`http://localhost:8080/getuserskills/${id}`);
+                    const res = await axios.get(`${dburl}/getuserskills/${id}`);
                     const userSkillData = res.data;
                     if (userSkillData) {
                          navigate(`/home/resume/${data?.name}?templateId=${data?.templateId}`)
@@ -35,7 +36,7 @@ const Skills = () => {
 
           const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
           try {
-               const res = await axios.post(`http://localhost:8080/storeuserskills/${id}`, selectedSkills)
+               const res = await axios.post(`${dburl}/storeuserskills/${id}`, selectedSkills)
                console.log(res.data);
 
                setSelectedSkills(null);

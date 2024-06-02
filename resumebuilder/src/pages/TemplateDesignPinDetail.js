@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FaHouse } from 'react-icons/fa6'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+const dburl = process.env.REACT_APP_URL
 
 const TemplateDesignPinDetail = () => {
 
@@ -13,7 +14,7 @@ const TemplateDesignPinDetail = () => {
     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
     try {
       console.log(data);
-      const res = await axios.post(`http://localhost:8080/storeusertemplate/${id}`, data)
+      const res = await axios.post(`${dburl}/storeusertemplate/${id}`, data)
       console.log(res.data);
       navigate('/userdetail');
     } catch (e) {

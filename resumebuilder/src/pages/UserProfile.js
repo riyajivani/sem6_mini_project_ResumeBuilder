@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from 'antd';
+const dburl = process.env.REACT_APP_URL
 
 const UserProfile = () => {
 
@@ -13,7 +14,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchTemplate = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/getusertemplates/${user?.userId}`);
+        const response = await axios.get(`${dburl}/getusertemplates/${user?.userId}`);
         console.log(response);
         setUserTemplate(response.data);
       } catch (error) {
@@ -32,13 +33,13 @@ const UserProfile = () => {
 
     try {
 
-      await axios.delete(`http://localhost:8080/deletedetails/${user?.userId}`);
+      await axios.delete(`${dburl}/deletedetails/${user?.userId}`);
 
-      await axios.delete(`http://localhost:8080/deleteexperiences/${user?.userId}`);
+      await axios.delete(`${dburl}/deleteexperiences/${user?.userId}`);
 
-      await axios.delete(`http://localhost:8080/deleteeducations/${user?.userId}`);
+      await axios.delete(`${dburl}/deleteeducations/${user?.userId}`);
 
-      await axios.delete(`http://localhost:8080/deleteskills/${user?.userId}`);
+      await axios.delete(`${dburl}/deleteskills/${user?.userId}`);
 
       navigate('/userdetail');
 

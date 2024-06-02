@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa'
 // import MainSpinner from '../component/MainSpinner'
+const dburl = process.env.REACT_APP_URL
 
 const CreateTemplates = () => {
 
@@ -25,7 +26,7 @@ const CreateTemplates = () => {
   const PushToDb = async () => {
 
     try {
-      let res = await axios.post("http://localhost:8080/addtemplate", {
+      let res = await axios.post(`${dburl}/addtemplate`, {
         name: imageAsset.title,
         url: imageAsset.url
       })
@@ -41,7 +42,7 @@ const CreateTemplates = () => {
   }
 
   const fetchTemplate = async () => {
-    let response = await axios.get("http://localhost:8080/gettemplate");
+    let response = await axios.get(`${dburl}/gettemplate`);
     setTemplate(response.data)
   }
 
@@ -49,7 +50,7 @@ const CreateTemplates = () => {
 
   const handleDelete = async (id) => {
     try {
-      let response = await axios.delete(`http://localhost:8080/deletetemplate/${id}`);
+      let response = await axios.delete(`${dburl}/deletetemplate/${id}`);
       console.log(response.data);
       toast("successfully deleted");
     } catch (e) {

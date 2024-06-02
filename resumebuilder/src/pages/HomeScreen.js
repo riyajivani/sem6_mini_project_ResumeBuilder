@@ -3,6 +3,7 @@ import { Header, MainSpinner } from '../component'
 import { Route, Routes } from 'react-router-dom'
 import {HomeContainer} from '../containers'
 import {CreateResume, CreateTemplates, TemplateDesignPinDetail, UserProfile} from '../pages'
+// const dburl = process.env.REACT_APP_URL
 
 const HomeScreen = () => {
   return (

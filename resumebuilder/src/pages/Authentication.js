@@ -5,6 +5,7 @@ import { FaChevronRight } from 'react-icons/fa6'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+const dburl = process.env.REACT_APP_URL
 
 const Authentication = () => {
 
@@ -16,7 +17,7 @@ const Authentication = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/login", {
+      const res = await axios.post(`${dburl}/login`, {
         email: user.email,
         password: user.password
       })
@@ -33,7 +34,7 @@ const Authentication = () => {
 
   const handleSignUp = async () => {
     try {
-      const res = await axios.post("http://localhost:8080/signup", {
+      const res = await axios.post(`${dburl}/signup`, {
         email: user.email,
         password: user.password
       })

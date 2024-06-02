@@ -3,13 +3,14 @@ import { AnimatePresence } from 'framer-motion'
 import { TemplateDesignPin } from '../component'
 import noData from '../assets/nodata.png'
 import axios from 'axios'
+const dburl = process.env.REACT_APP_URL
 
 const HomeContainer = () => {
 
   const [templates, setTemplates] = useState([]);
 
   const fetchTemp = async () => {
-    let response = await axios.get("http://localhost:8080/gettemplate");
+    let response = await axios.get(`${dburl}/gettemplate`);
     setTemplates(response.data)
   }
   useEffect(() => { fetchTemp() }, [])

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const dburl = process.env.REACT_APP_URL
 
 const WorkExperience = () => {
 
@@ -23,7 +24,7 @@ const WorkExperience = () => {
           const fetchWorkExperience = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const res = await axios.get(`http://localhost:8080/getexperiences/${id}`);
+                    const res = await axios.get(`${dburl}/getexperiences/${id}`);
                     const userExpData = res.data;
                     if (userExpData) {
                          navigate('/education');
@@ -74,7 +75,7 @@ const WorkExperience = () => {
 
           const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
           try {
-               const res = await axios.post(`http://localhost:8080/storeexperiences/${id}`, workExperience.experiences)
+               const res = await axios.post(`${dburl}/storeexperiences/${id}`, workExperience.experiences)
                console.log(res.data);
 
                setWorkExperience({

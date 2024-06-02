@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+const dburl = process.env.REACT_APP_URL
+
 
 const EducationDetail = () => {
      const [educationDetails, setEducationDetails] = useState({
@@ -22,7 +24,7 @@ const EducationDetail = () => {
           const fetchEducationDetails = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const res = await axios.get(`http://localhost:8080/geteducations/${id}`);
+                    const res = await axios.get(`${dburl}/geteducations/${id}`);
                     const userEduData = res.data;
                     if (userEduData) {
                          navigate('/skills')
@@ -74,7 +76,7 @@ const EducationDetail = () => {
 
           const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
           try {
-               const res = await axios.post(`http://localhost:8080/storeeducations/${id}`, educationDetails.education)
+               const res = await axios.post(`${dburl}/storeeducations/${id}`, educationDetails.education)
                console.log(res.data);
 
                setEducationDetails({

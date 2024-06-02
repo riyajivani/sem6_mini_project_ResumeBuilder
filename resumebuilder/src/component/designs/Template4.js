@@ -5,6 +5,7 @@ import { GoDot } from "react-icons/go";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import axios from 'axios';
+const dburl = process.env.REACT_APP_URL
 
 const Template4 = () => {
 
@@ -24,7 +25,7 @@ const Template4 = () => {
           const fetchUserDetails = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const response = await axios.get(`http://localhost:8080/getdetail/${id}`);
+                    const response = await axios.get(`${dburl}/getdetail/${id}`);
                     console.log(response.data);
                     setUser(response.data);
                } catch (error) {
@@ -36,7 +37,7 @@ const Template4 = () => {
           const fetchEducationDetails = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const response = await axios.get(`http://localhost:8080/geteducations/${id}`);
+                    const response = await axios.get(`${dburl}/geteducations/${id}`);
                     console.log(response.data);
                     setEducation(response.data);
                } catch (error) {
@@ -48,7 +49,7 @@ const Template4 = () => {
           const fetchWorkExperience = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const response = await axios.get(`http://localhost:8080/getexperiences/${id}`);
+                    const response = await axios.get(`${dburl}/getexperiences/${id}`);
                     console.log(response.data);
                     setWork(response.data);
                } catch (error) {
@@ -60,7 +61,7 @@ const Template4 = () => {
           const fetchSkills = async () => {
                try {
                     const id = JSON.parse(localStorage.getItem("loggedInUser"))?.userId;
-                    const response = await axios.get(`http://localhost:8080/getuserskills/${id}`);
+                    const response = await axios.get(`${dburl}/getuserskills/${id}`);
                     console.log(response.data);
                     setSkills(response.data);
                } catch (error) {
