@@ -17,7 +17,7 @@ public class ResumebuilderApplication {
 		// Set the host and port for the embedded Tomcat server
 		System.setProperty("server.port", port);
 		System.setProperty("server.address", "0.0.0.0");
-		
+
 		SpringApplication.run(ResumebuilderApplication.class, args);
 	}
 
