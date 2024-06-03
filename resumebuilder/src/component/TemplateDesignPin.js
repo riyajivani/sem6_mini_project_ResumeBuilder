@@ -20,7 +20,7 @@ const TemplateDesignPin = ({ data, index }) => {
 
           <div className='w-fit h-[300px] 2xl:h-[640px] rounded-md bg-gray-200 overflow-hidden relative' onMouseEnter={() => { setIshoverred(true) }} onMouseLeave={() => { setIshoverred(false) }}>
 
-               <img src={data?.url} loading='lazy' className='w-full h-full object-fill' alt="" />
+               <img src={data?.url} className='w-full h-full object-fill' alt="" />
 
                <AnimatePresence>
                     {ishoverred &&
